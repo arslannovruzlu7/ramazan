@@ -18,10 +18,14 @@
         .sky-moving { position: absolute; width: 200vw; height: 200vh; top: -100vh; left: 0; animation: moveDiagonal 45s linear infinite; }
         @keyframes moveDiagonal { 0% { transform: translate(0, 0); } 100% { transform: translate(-100vw, 100vh); } }
         
+        /* AY - İndi KƏSKİN və AYDINDIR */
         .moon { 
             position: absolute; font-size: 80px; color: #fff; 
+            /* Sehrli kölgə əlavə edirik */
             text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7; 
-            filter: blur(1.5px); z-index: 2; 
+            /* Blur effektini tamamilə ləğv etdik */
+            filter: none; 
+            z-index: 2; 
         }
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; }
@@ -60,30 +64,31 @@
             justify-content: center; height: 100%; position: relative;
         }
 
-        /* Sehrli Parıltı Keçidli Yazı */
+        /* --- YENİ ROMANTİK YAZI EFFEKTİ (Sparkle Fade) --- */
         .magic-text-box {
-            position: relative; margin-bottom: 25px; height: 40px;
+            position: relative; margin-bottom: 25px; height: 50px;
             display: flex; align-items: center; justify-content: center;
-            overflow: hidden; width: 90%;
+            width: 90%;
         }
 
         #magic-text {
             color: #ffd700; font-size: 24px; font-weight: bold;
-            text-align: center; text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            opacity: 1; transition: opacity 0.3s;
+            text-align: center; 
+            /* Sehrli parıltı */
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
+            /* Yumşaq keçid animasiyası */
+            transition: opacity 1s ease, transform 1s ease, filter 1s ease;
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0px);
         }
 
-        /* Parıltı effekti (Shimmer) */
-        .shimmer-line {
-            position: absolute; top: 0; left: -100%;
-            width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
-            transform: skewX(-20deg);
-            z-index: 2;
+        /* Yazının itmə klassı */
+        .text-fade-out {
+            opacity: 0;
+            transform: scale(0.8);
+            filter: blur(10px);
         }
-
-        .animate-shimmer { animation: shimmerMove 0.8s ease-out forwards; }
-        @keyframes shimmerMove { 0% { left: -100%; } 100% { left: 150%; } }
 
         /* Davul Şəkli Dizaynı */
         .drum-wrapper {
@@ -92,7 +97,6 @@
             -webkit-tap-highlight-color: transparent;
         }
         .drum-wrapper:active { transform: scale(0.92); }
-        
         .drum-img { width: 100%; height: 100%; object-fit: contain; }
 
         /* Dalğalanma (Ripple) */
@@ -112,6 +116,8 @@
     </style>
 </head>
 <body>
+
+    <audio id="drum-sound" src="https://www.myinstants.com/media/sounds/bass-drum.mp3" preload="auto"></audio>
 
     <div class="sky-wrapper">
         <div class="sky-moving" id="sky">
@@ -136,8 +142,7 @@
         
         <div class="drum-container">
             <div class="magic-text-box">
-                <div id="magic-text">Davulu döyəclə! 🥁</div>
-                <div class="shimmer-line" id="shimmer"></div>
+                <div id="magic-text">Məni döyəclə, gub-gub! 🥁</div>
             </div>
             
             <div class="drum-wrapper" id="drum">
@@ -147,7 +152,6 @@
     </div>
 
     <script>
-        // Ulduzlar
         const skyMoving = document.getElementById('sky');
         for (let i = 0; i < 180; i++) {
             let star = document.createElement('div');
@@ -159,48 +163,63 @@
             skyMoving.appendChild(star);
         }
 
-        // Davul və Yazı Logikası
         const drum = document.getElementById('drum');
         const text = document.getElementById('magic-text');
-        const shimmer = document.getElementById('shimmer');
+        const sound = document.getElementById('drum-sound');
 
         const messages = [
-            "Gecən xeyrə qalsın, mələyim! ",
-            "Bu il bütün duaların çin olsun. ",
-            "Səninlə hər Ramazan bir nağıldır. ",
-            "Süfrən həmişə bərəkətli olsun. ",
-            "Səni dünyalar qədər sevirəm! ",
-            "Qəlbinin nuru üzünə vursun. ",
-            "Sən mənim ən gözəl hədiyyəmsən. ",
-            "Dualarımda həmişə sən varsan.",
-            "Həyatın bu ulduzlar kimi parlasın. ",
+            "Gecən xeyrə qalsın, mələyim! ✨",
+            "Bu il bütün duaların çin olsun. ❤️",
+            "Səninlə hər Ramazan bir nağıldır. 🌙",
+            "Süfrən həmişə bərəkətli olsun. 🙏",
+            "Səni dünyalar qədər sevirəm! 🥰",
+            "Qəlbinin nuru üzünə vursun. ✨",
+            "Sən mənim ən gözəl hədiyyəmsən. 🎁",
+            "Dualarımda həmişə sən varsan. 🤲",
+            "Həyatın bu ulduzlar kimi parlasın. ⭐",
             "Ramazanın hüzuru qəlbinə dolsun.",
-            "Sənin gülüşün mənim iftarımdır. ",
-            "Hər sahurda səni düşünürəm. ",
+            "Sənin gülüşün mənim iftarımdır. 😊",
+            "Hər sahurda səni düşünürəm. ✨",
             "Mehriban və xoşbəxt qal həmişə.",
             "Səninlə keçən hər an çox dəyərlidir.",
-            "Bayramda görüşmək ümidi ilə! "
+            "Bayramda görüşmək ümidi ilə! 🎉"
         ];
 
         let msgIdx = 0;
+        let isTransitioning = false; // Ard-arda klikləməni idarə etmək üçün
 
         drum.addEventListener('click', () => {
-            // 1. Dalğalanma
+            // Əgər keçid gedirsə, klikləməni rədd et
+            if (isTransitioning) return;
+            isTransitioning = true;
+
+            // Səsi çal
+            sound.currentTime = 0;
+            sound.play();
+
+            // Dalğalanma
             const rip = document.createElement('div');
             rip.className = 'ripple';
             drum.appendChild(rip);
             setTimeout(() => rip.remove(), 700);
 
-            // 2. Parıltı keçidi və Yazı dəyişimi
-            shimmer.classList.remove('animate-shimmer');
-            void shimmer.offsetWidth; // Restart animation
-            shimmer.classList.add('animate-shimmer');
+            // --- YENİ ROMANTİK KEÇİD ---
+            // 1. Köhnə yazını zərifcə yox edirik
+            text.classList.add('text-fade-out');
 
-            // Yazını parıltı keçən vaxtın ortasında dəyişirik
+            // 2. Keçid vaxtı (1s) bitdikdən sonra yazını dəyişib geri gətiririk
             setTimeout(() => {
                 msgIdx = (msgIdx + 1) % messages.length;
                 text.innerText = messages[msgIdx];
-            }, 300);
+                // Yeni yazını zərifcə üzə çıxarırıq
+                text.classList.remove('text-fade-out');
+                
+                // Keçid bitdi
+                setTimeout(() => {
+                    isTransitioning = false;
+                }, 1000);
+
+            }, 1000); // 1 saniyəlik zərif fade-out
         });
     </script>
 </body>
