@@ -6,21 +6,17 @@
     <title>Sənin Üçün</title>
     <style>
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
+            margin: 0; padding: 0;
+            height: 100%; overflow: hidden;
             background-color: #070720; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         /* --- SƏMA VƏ ULDUZLAR --- */
         .sky-wrapper {
-            position: absolute;
-            top: 0; left: 0;
+            position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
-            overflow: hidden;
-            z-index: 1;
+            overflow: hidden; z-index: 1;
         }
 
         .sky-moving {
@@ -35,39 +31,31 @@
             100% { transform: translate(-100vw, 100vh); }
         }
 
-        /* AYIN YENİ DİZAYNI (Daha yumşaq, parıltılı və yüngül bulanıq) */
+        /* AY - Yumşaq və ulduzlarla harmoniya içində */
         .moon {
             position: absolute;
-            font-size: 80px;
-            color: #fff;
-            /* Qat-qat yumşaq kölgələr */
-            text-shadow: 0 0 15px rgba(255, 255, 255, 1), 
-                         0 0 35px rgba(255, 255, 210, 0.9),
-                         0 0 60px rgba(255, 255, 210, 0.5);
-            /* Ulduzlarla eyni atmosferi yaratmaq üçün yüngül blur */
-            filter: blur(1px); 
+            font-size: 80px; color: #fff;
+            text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7, 0 0 60px rgba(255, 253, 231, 0.5);
+            filter: blur(1.5px); 
             z-index: 2; 
         }
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; } 
 
-        /* Ulduzlar */
+        /* ULDUZLAR - Sarımtıl parıltılı (Qara kənarsız) */
         .star {
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
-            background-color: white;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 1), 
-                        0 0 15px rgba(255, 215, 0, 0.6);
+            background-color: #ffffff;
+            filter: drop-shadow(0 0 5px #ffd700) drop-shadow(0 0 10px #ffecb3);
             animation: pulseStar 1.5s ease-in-out infinite alternate;
         }
 
         .star::before, .star::after {
             content: '';
             position: absolute;
-            background: linear-gradient(180deg, rgba(255,215,0,0) 0%, rgba(255,255,255,1) 50%, rgba(255,215,0,0) 100%);
-            /* Ulduzların bulanıqlığını cüzi azaltdıq (1px -> 0.6px) */
-            filter: blur(0.6px) contrast(200%);
+            background: linear-gradient(180deg, rgba(255, 236, 179, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 236, 179, 0) 100%);
             pointer-events: none;
         }
 
@@ -80,46 +68,42 @@
 
         .star.star-cross-large {
             width: 5px; height: 5px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 215, 0, 0.8);
+            filter: drop-shadow(0 0 8px #ffd700) drop-shadow(0 0 15px #ffffff);
         }
         .star.star-cross-large::before, .star.star-cross-large::after {
-            top: -200%; left: 50%; width: 2px; height: 500%;
+            top: -200%; left: 50%; width: 1.5px; height: 500%;
         }
         .star.star-cross-large::before { transform: translateX(-50%) rotate(45deg); }
         .star.star-cross-large::after { transform: translateX(-50%) rotate(-45deg); }
 
         .star.star-dot {
             width: 2.5px; height: 2.5px;
-            box-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+            filter: drop-shadow(0 0 4px #ffd700);
             animation: none; 
         }
 
         @keyframes pulseStar {
-            0% { opacity: 0.8; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1.15); }
+            0% { opacity: 0.7; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.1); }
         }
 
         /* --- SABİT ARXA FON --- */
         .static-bg-layer {
             position: absolute;
-            top: -15px; 
-            left: 0;
-            width: 100%;
-            height: 250px; 
+            top: -15px; left: 0;
+            width: 100%; height: 250px; 
             background-image: url('arxafon.png'); 
             background-repeat: repeat-x; 
             background-size: auto 100%; 
-            z-index: 5; 
-            pointer-events: none;
+            z-index: 5; pointer-events: none;
         }
 
-        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA (HƏRƏKƏTLİ) --- */
+        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA --- */
         .hanging-zone {
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 10; 
-            pointer-events: none;
+            z-index: 10; pointer-events: none;
         }
 
         .hanging-img {
@@ -127,15 +111,13 @@
             transform-origin: top center;
             animation: swing ease-in-out infinite alternate;
             height: auto;
-            
             will-change: transform;
             backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
             transform: translateZ(0);
-            -webkit-transform: translateZ(0);
             image-rendering: -webkit-optimize-contrast; 
         }
 
+        /* Kompyuter ölçüləri */
         .img-l1 { left: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.5s; }
         .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; animation-delay: 0.5s; }
         .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; animation-delay: 1.2s; }
@@ -159,7 +141,6 @@
             position: absolute;
             top: -49px; left: 0;
             width: 100%; height: 50px;
-            line-height: 0;
         }
 
         .wave svg {
@@ -179,20 +160,21 @@
             box-sizing: border-box;
         }
 
-        /* --- MOBİL ÜÇÜN DÜZƏLİŞLƏR --- */
+        /* --- MOBİL ÜÇÜN (YENİLƏNDİ - FENELER BÖYÜDÜLDÜ) --- */
         @media (max-width: 768px) {
-            .moon { font-size: 50px; } 
+            .moon { font-size: 55px; } 
             
-            .static-bg-layer { height: 120px; top: -5px; }
+            /* Sabit arxa fonu mobildə bir az daha hündür etdik */
+            .static-bg-layer { height: 160px; top: -10px; }
 
-            .img-l1 { left: -2%; top: -15px; width: 38%; max-width: 140px; }
-            .img-l2 { left: 18%; top: -25px; width: 28%; max-width: 100px; }
-            .img-r1 { right: -2%; top: -15px; width: 38%; max-width: 140px; }
-            .img-r2 { right: 18%; top: -25px; width: 28%; max-width: 100px; }
+            /* Mobildə fənərlərin ölçüsü artırıldı (45% və 35%) */
+            .img-l1 { left: -5%; top: -15px; width: 45%; max-width: 180px; }
+            .img-l2 { left: 15%; top: -25px; width: 35%; max-width: 130px; }
+            .img-r1 { right: -5%; top: -15px; width: 45%; max-width: 180px; }
+            .img-r2 { right: 15%; top: -25px; width: 35%; max-width: 130px; }
 
-            .bottom-section { height: 45%; } 
+            .bottom-section { height: 42%; } 
             .wave { top: -29px; height: 30px; } 
-            .wave svg { height: calc(100% + 4px); transform: translateY(2px); }
         }
     </style>
 </head>
@@ -208,11 +190,10 @@
     <div class="static-bg-layer"></div>
 
     <div class="hanging-zone">
-        <img src="sekil1.png" alt="Fənərlər Sol 1" class="hanging-img img-l1">
-        <img src="sekil2.png" alt="Fənərlər Sol 2" class="hanging-img img-l2">
-        
-        <img src="sekil2.png" alt="Fənərlər Sağ 1" class="hanging-img img-r1">
-        <img src="sekil1.png" alt="Fənərlər Sağ 2" class="hanging-img img-r2">
+        <img src="sekil1.png" alt="Sol 1" class="hanging-img img-l1">
+        <img src="sekil2.png" alt="Sol 2" class="hanging-img img-l2">
+        <img src="sekil2.png" alt="Sağ 1" class="hanging-img img-r1">
+        <img src="sekil1.png" alt="Sağ 2" class="hanging-img img-r2">
     </div>
 
     <div class="bottom-section">
@@ -221,34 +202,25 @@
                 <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.72,187.4,99.82,233.19,83.74,277.6,71.62,321.39,56.44Z" fill="#4a148c"></path>
             </svg>
         </div>
-        
         <div class="content-area">
-            <h2>Ramazan Sürprizi</h2>
-            <p>Bura xüsusi sözlər gələcək.</p>
+            <h2>Ramazan Bayramın Mübarək!</h2>
+            <p>Səninlə hər iftar bir bayramdır.</p>
         </div>
     </div>
 
     <script>
         const skyMoving = document.getElementById('sky');
-        const starCount = 200; 
+        const starCount = 180; 
 
         for (let i = 0; i < starCount; i++) {
             let star = document.createElement('div');
-            
             const starType = Math.floor(Math.random() * 3);
-            let typeClass = '';
-            if (starType === 0) typeClass = 'star-dot';
-            else if (starType === 1) typeClass = 'star-cross-small';
-            else typeClass = 'star-cross-large';
+            let typeClass = (starType === 0) ? 'star-dot' : (starType === 1 ? 'star-cross-small' : 'star-cross-large');
             
             star.className = `star ${typeClass}`;
-            
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%'; 
-            
             star.style.animationDelay = Math.random() * 2 + 's';
-            star.style.animationDuration = (1 + Math.random() * 1) + 's';
-            
             skyMoving.appendChild(star);
         }
     </script>
