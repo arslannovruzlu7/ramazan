@@ -41,7 +41,7 @@
             background-size: auto 100%; z-index: 5; pointer-events: none;
         }
 
-        /* --- AŞAĞI BƏNÖVŞƏYİ SAHƏ --- */
+        /* --- AŞAĞI HİSSƏ --- */
         .bottom-section {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 48%;
             background-color: #4a148c; z-index: 15;
@@ -54,79 +54,82 @@
             perspective: 2000px;
         }
 
-        /* Təlimat Yazısı */
         #instruction-text {
             color:#d4af37; margin-bottom:15px; font-weight:bold; letter-spacing:3px; font-size:14px;
             transition: opacity 1s ease;
         }
 
-        /* --- ESTETİK TƏQVİM --- */
+        /* --- TƏQVİM QUTUSU --- */
         .calendar-box {
             position: relative;
-            width: 220px; height: 280px;
+            width: 220px; height: 300px;
             margin-top: 10px;
         }
 
-        /* Sabit Qalın Başlıq */
-        .calendar-header-fixed {
-            position: absolute; top: -10px; left: 50%;
-            transform: translateX(-50%);
-            width: 90%; height: 45px;
-            background: linear-gradient(135deg, #1a237e, #0d47a1); /* Tünd Göy */
-            border-radius: 8px 8px 0 0;
-            z-index: 50; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            display: flex; justify-content: center; align-items: center;
-        }
-        .header-dots {
-            width: 80%; display: flex; justify-content: space-between;
-        }
-        .header-dots span {
-            width: 8px; height: 8px; background: #ffffff; border-radius: 50%;
+        /* VƏRƏQ (Başlıqla birlikdə) */
+        .leaf-wrapper {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex; flex-direction: column;
+            cursor: pointer;
+            transform-origin: top center;
+            transition: transform 0.3s;
         }
 
-        /* Təqvim Vərəqi */
-        .leaf {
-            position: absolute; top: 25px; left: 0;
-            width: 100%; height: 100%;
-            background: #1a237e; /* Ramazan tünd göy rəngi */
+        /* Hər vərəqin öz fərdi başlığı */
+        .leaf-header {
+            width: 90%; height: 40px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, #1a237e, #0d47a1);
+            border-radius: 8px 8px 0 0;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+        .header-dots {
+            width: 70%; display: flex; justify-content: space-between;
+        }
+        .header-dots span {
+            width: 6px; height: 6px; background: rgba(255,255,255,0.6); border-radius: 50%;
+        }
+
+        /* Əsas ağ kağız hissəsi */
+        .leaf-content {
+            flex: 1;
+            background: #1a237e;
             border-radius: 0 0 10px 10px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.5);
             display: flex; flex-direction: column;
-            box-sizing: border-box;
-            transform-origin: top center;
-            cursor: pointer;
-            overflow: hidden;
             border: 1px solid #303f9f;
+            margin-top: -5px; /* Başlığa yapışması üçün */
+            z-index: 1;
         }
 
         .leaf-top-bar {
-            height: 40px; background: rgba(255, 255, 255, 0.1); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            height: 40px; background: rgba(255, 255, 255, 0.05); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 15px;
-            font-size: 14px; font-weight: bold; color: #fff;
-            letter-spacing: 1px;
+            padding: 0 15px; font-size: 13px; font-weight: bold; color: #fff;
         }
 
         .leaf-body {
             flex: 1; padding: 20px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
 
         .leaf-message {
             font-family: 'Dancing Script', cursive;
-            font-size: 22px; color: #ffffff; text-align: center;
-            line-height: 1.5; text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-size: 21px; color: #ffffff; text-align: center;
+            line-height: 1.4;
         }
 
         .leaf-footer {
-            height: 35px; border-top: 1px solid rgba(255, 255, 255, 0.1);
+            height: 30px; border-top: 1px solid rgba(255, 255, 255, 0.05);
             display: flex; align-items: center; justify-content: center;
-            font-size: 11px; color: #ccc; font-style: italic;
+            font-size: 10px; color: #bbb;
         }
 
-        /* SÜZÜLMƏ ANİMASİYASI */
+        /* DÜŞMƏ ANİMASİYASI */
         .leaf-fall {
             animation: elegantFall 2.2s cubic-bezier(0.445, 0.05, 0.55, 0.95) forwards;
             pointer-events: none;
@@ -134,19 +137,13 @@
 
         @keyframes elegantFall {
             0% { transform: rotateX(0deg); opacity: 1; }
-            15% { transform: rotateX(-30deg) rotateY(10deg); }
-            30% { transform: rotateX(-20deg) rotateZ(-15deg) translateX(30px) translateY(20px); }
-            60% { transform: translateY(250px) rotateZ(25deg) rotateY(45deg); opacity: 0.7; }
-            100% { transform: translateY(700px) rotateZ(60deg) rotateX(120deg); opacity: 0; }
+            15% { transform: rotateX(-40deg) rotateY(10deg); }
+            100% { transform: translateY(800px) rotateZ(60deg) rotateX(120deg); opacity: 0; }
         }
 
-        /* MOBİL */
         @media (max-width: 768px) {
-            .moon { font-size: 55px; } 
-            .static-bg-layer { height: 320px; }
-            .bottom-section { height: 52%; } 
-            .calendar-box { width: 200px; height: 260px; }
-            .leaf-message { font-size: 19px; }
+            .calendar-box { width: 190px; height: 270px; }
+            .leaf-message { font-size: 18px; }
         }
     </style>
 </head>
@@ -168,31 +165,21 @@
         
         <div class="content-area">
             <div id="instruction-text">TƏQVİMİ ÇEVİRMƏK ÜÇÜN TOXUN</div>
-            
-            <div class="calendar-box" id="calendar">
-                <div class="calendar-header-fixed" id="cal-header">
-                    <div class="header-dots"><span></span><span></span><span></span><span></span></div>
-                </div>
-            </div>
+            <div class="calendar-box" id="calendar"></div>
         </div>
     </div>
 
     <script>
-        // Ulduzların yaradılması
         const skyMoving = document.getElementById('sky');
-        for (let i = 0; i < 180; i++) {
+        for (let i = 0; i < 150; i++) {
             let star = document.createElement('div');
             star.className = 'star';
-            star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
+            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%'; 
             star.style.animationDelay = Math.random() * 2 + 's';
             skyMoving.appendChild(star);
         }
-
-        const calendar = document.getElementById('calendar');
-        const instructionText = document.getElementById('instruction-text');
-        const calHeader = document.getElementById('cal-header');
 
         const messages = [
             "Səninlə hər iftar bir bayramdır. ❤️", "Gözlərindəki nur ulduzlardan parlaqdır. ✨", "Sən mənim ən gözəl duamsan. 🤲",
@@ -207,53 +194,55 @@
             "Göyüzü qədər sonsuz sevgim var.", "Hər arzun çin olsun bu ayda.", "Bayramın mübarək, əzizim! 🌙❤️"
         ];
 
-        let totalDays = 30;
+        const calendar = document.getElementById('calendar');
+        const instructionText = document.getElementById('instruction-text');
         let removedDays = 0;
 
         function createLeaf(index) {
-            if (index >= totalDays) return null;
-            const leaf = document.createElement('div');
-            leaf.className = 'leaf';
-            // Z-index tərsinə ki, ilk günlər ən üstdə olsun
-            leaf.style.zIndex = (totalDays + 10) - index; 
-            
-            leaf.innerHTML = `
-                <div class="leaf-top-bar">
-                    <span>🌙</span>
-                    <span>GÜN ${index + 1}</span>
-                    <span></span>
+            const wrapper = document.createElement('div');
+            wrapper.className = 'leaf-wrapper';
+            wrapper.style.zIndex = 100 - index;
+
+            wrapper.innerHTML = `
+                <div class="leaf-header">
+                    <div class="header-dots"><span></span><span></span><span></span><span></span></div>
                 </div>
-                <div class="leaf-body">
-                    <div class="leaf-message">${messages[index]}</div>
+                <div class="leaf-content">
+                    <div class="leaf-top-bar">
+                        <span>🌙</span>
+                        <span>GÜN ${index + 1}</span>
+                        <span></span>
+                    </div>
+                    <div class="leaf-body">
+                        <div class="leaf-message">${messages[index]}</div>
+                    </div>
+                    <div class="leaf-footer">© 2026 Ramazan Sevgisi</div>
                 </div>
-                <div class="leaf-footer">© 2026 Ramazan Sevgisi</div>
             `;
-            return leaf;
+            return wrapper;
         }
 
-        // Bütün 30 vərəqi əvvəlcədən yaradıb yığırıq
-        for (let i = 0; i < totalDays; i++) {
+        // 30 vərəqi yaradırıq
+        for (let i = 0; i < 30; i++) {
             calendar.appendChild(createLeaf(i));
         }
 
         calendar.addEventListener('click', () => {
-            // İlk toxunuşda yazını yox et
             if (instructionText.style.opacity !== "0") {
                 instructionText.style.opacity = "0";
             }
 
-            const leaves = calendar.querySelectorAll('.leaf:not(.leaf-fall)');
+            const leaves = calendar.querySelectorAll('.leaf-wrapper:not(.leaf-fall)');
             if (leaves.length === 0) return;
 
-            // Ən üstdəki vərəqi seçirik (ilk gün)
             const topLeaf = leaves[0];
             topLeaf.classList.add('leaf-fall');
             removedDays++;
 
-            // 30-cu vərəq düşəndə hər şeyi təmizlə
-            if (removedDays === totalDays) {
+            // 30-cu vərəq düşəndə sahə tam boş qalacaq
+            if (removedDays === 30) {
                 setTimeout(() => {
-                    calendar.style.display = 'none';
+                    calendar.innerHTML = ''; 
                 }, 2200);
             }
         });
