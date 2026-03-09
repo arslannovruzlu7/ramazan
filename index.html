@@ -89,7 +89,7 @@
         /* Yarpağın daxili dizaynı */
         .leaf-content {
             flex: 1;
-            background: #070b34; /* Daha tünd, dərin gecə mavisi */
+            background: #070b34; 
             border-radius: 0 0 15px 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             display: flex; flex-direction: column;
@@ -137,10 +137,23 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        /* Aşağıdakı kiçik siluet */
-        .silhouette {
-            position: absolute; bottom: 5px; opacity: 0.15;
-            font-size: 40px; color: #fff; pointer-events: none;
+        /* --- SƏNİN QRAFİKANIN OLDUĞU HİSSƏ --- */
+        .graphic-silhouette {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%; /* Şəklin böyüklüyü */
+            height: auto;
+            opacity: 0.12; /* Yazının arxasında çox şəffaf olması üçün */
+            pointer-events: none;
+            z-index: 1; /* Yazının arxasına keçir */
+        }
+
+        .graphic-silhouette img {
+            width: 100%;
+            height: auto;
+            /* Şəklin rəngini qızılı/ağ tonlara çevirmək üçün CSS filtri */
+            filter: invert(100%) sepia(80%) saturate(400%) hue-rotate(340deg) brightness(105%);
         }
 
         .leaf-footer {
@@ -190,6 +203,7 @@
     </div>
 
     <script>
+        // Səma ulduzları
         const skyMoving = document.getElementById('sky');
         for (let i = 0; i < 150; i++) {
             let star = document.createElement('div');
@@ -230,6 +244,11 @@
                 <div class="leaf-content">
                     <div class="ornament orn-tl"></div>
                     <div class="ornament orn-br"></div>
+                    
+                    <div class="graphic-silhouette">
+                        <img src="https://raw.githubusercontent.com/orxonfmd/fayllar/refs/heads/main/ramadan-silhouette.png" alt="Ramazan Qrafikası">
+                    </div>
+
                     <div class="leaf-top-bar">
                         <span>🌙</span>
                         <span>GÜN ${index + 1}</span>
@@ -237,7 +256,6 @@
                     </div>
                     <div class="leaf-body">
                         <div class="leaf-message">${messages[index]}</div>
-                        <div class="silhouette">🕌</div>
                     </div>
                     <div class="leaf-footer">RAMAZAN 2026</div>
                 </div>
@@ -245,10 +263,12 @@
             return wrapper;
         }
 
+        // Təqvimi qurmaq
         for (let i = 0; i < 30; i++) {
             calendar.appendChild(createLeaf(i));
         }
 
+        // Klik hadisəsi
         calendar.addEventListener('click', () => {
             if (instructionText.style.opacity !== "0") {
                 instructionText.style.opacity = "0";
