@@ -14,7 +14,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* --- SƏMA VƏ ULDUZLAR (YENİLƏNİB) --- */
+        /* --- SƏMA VƏ ULDUZLAR --- */
         .sky-wrapper {
             position: absolute;
             top: 0; left: 0;
@@ -27,8 +27,7 @@
             position: absolute;
             width: 200vw; height: 200vh;
             top: -100vh; left: 0;
-            /* Sol aşağıya (diaqonal) hərəkət */
-            animation: moveDiagonal 45s linear infinite; /* Hərəkət sürətini azaltdım */
+            animation: moveDiagonal 45s linear infinite; 
         }
 
         @keyframes moveDiagonal {
@@ -41,122 +40,93 @@
             font-size: 80px;
             color: #fff;
             text-shadow: 0 0 25px rgba(255, 255, 210, 0.9);
-            z-index: 2; /* Ulduzların bəziləri ayın arxasında olsun */
+            z-index: 2; 
         }
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; } 
 
-        /* Ulduzların kəskin parlaması - yeni tərzi (image_5.png-dəki kimi) */
+        /* Ulduzların YENİ, kənarı sarı (qara kölgəsiz) parlaması */
         .star {
             position: absolute;
             border-radius: 50%;
             pointer-events: none;
-            /* Ana ağ nöqtə */
             background-color: white;
-            /* Brilyant kəsimi kimi kəskin parıltı üçün ana kölgə */
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
-                        0 0 20px rgba(255, 255, 255, 0.6);
-            /* Parlaqlığı yanıb-sönmədən daha kəskin etmək üçün animasiya */
+            /* Ağ və sarımtıl parıltı yayırıq */
+            box-shadow: 0 0 8px rgba(255, 255, 255, 1), 
+                        0 0 15px rgba(255, 215, 0, 0.6);
             animation: pulseStar 1.5s ease-in-out infinite alternate;
         }
 
-        /* Ulduzların kəskin X-şəkilli parıltıları */
         .star::before, .star::after {
             content: '';
             position: absolute;
-            background-color: white;
-            /* Brilyant kəsimi kimi dar gradient */
-            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
-            /* Parıltıların kəskin x-şəkilli təsirini artırmaq üçün süzgəclər */
-            filter: blur(1px) contrast(200%);
+            /* Ortası ağ, kənarları qızılı-sarı və şəffafa gedən təmiz rəng keçidi */
+            background: linear-gradient(180deg, rgba(255,215,0,0) 0%, rgba(255,255,255,1) 50%, rgba(255,215,0,0) 100%);
             pointer-events: none;
         }
 
-        /* Daha kiçik, kəskin x-şəkilli ulduz */
-        .star.star-cross-small {
-            width: 3px;
-            height: 3px;
-        }
+        .star.star-cross-small { width: 3px; height: 3px; }
         .star.star-cross-small::before, .star.star-cross-small::after {
-            top: -150%;
-            left: 50%;
-            width: 1px;
-            height: 400%;
+            top: -150%; left: 50%; width: 1px; height: 400%;
         }
-        .star.star-cross-small::before {
-            transform: translateX(-50%) rotate(45deg);
-        }
-        .star.star-cross-small::after {
-            transform: translateX(-50%) rotate(-45deg);
-        }
+        .star.star-cross-small::before { transform: translateX(-50%) rotate(45deg); }
+        .star.star-cross-small::after { transform: translateX(-50%) rotate(-45deg); }
 
-        /* Daha böyük, kəskin x-şəkilli ulduz (image_5.png-dəki kimi daha parlaq) */
         .star.star-cross-large {
-            width: 6px;
-            height: 6px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 1), 
-                        0 0 30px rgba(255, 255, 255, 0.8);
+            width: 5px; height: 5px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 215, 0, 0.8);
         }
         .star.star-cross-large::before, .star.star-cross-large::after {
-            top: -200%;
-            left: 50%;
-            width: 2px;
-            height: 500%;
+            top: -200%; left: 50%; width: 2px; height: 500%;
         }
-        .star.star-cross-large::before {
-            transform: translateX(-50%) rotate(45deg);
-        }
-        .star.star-cross-large::after {
-            transform: translateX(-50%) rotate(-45deg);
-        }
+        .star.star-cross-large::before { transform: translateX(-50%) rotate(45deg); }
+        .star.star-cross-large::after { transform: translateX(-50%) rotate(-45deg); }
 
-        /* Sadəcə sabit, parlaq nöqtə (daha az intensiv) */
         .star.star-dot {
-            width: 2px;
-            height: 2px;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 1);
-            animation: none; /* Bu növ daha sabit qalır */
+            width: 2.5px; height: 2.5px;
+            box-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+            animation: none; 
         }
 
-        /* Parlaqlığı yanıb-sönmədən kəskin pulsasiya ilə dəyişdirmək */
         @keyframes pulseStar {
-            0% { 
-                opacity: 0.8; 
-                transform: scale(0.95); 
-                filter: brightness(100%);
-            }
-            100% { 
-                opacity: 1; 
-                transform: scale(1.1); 
-                filter: brightness(150%);
-            }
+            0% { opacity: 0.8; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1.15); }
         }
 
-        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA --- */
-        .hanging-zone {
+        /* --- SABİT ARXA FON (YENİ ŞƏKİL) --- */
+        .static-bg-layer {
             position: absolute;
-            top: 0;
+            top: -15px; /* Yuxarıdan kəsikləri gizlədirik */
             left: 0;
             width: 100%;
-            display: flex;
-            justify-content: space-between; /* Şəkilləri tam olaraq iki kənara atır */
-            padding: 0 5%; /* Kənarlardan çox az (5%) boşluq buraxır ki, ekrana yapışmasın */
-            box-sizing: border-box; /* Padding-in ekranı böyütməsinin qarşısını alır */
-            align-items: flex-start;
-            z-index: 10;
+            height: 250px; /* Hündürlük */
+            background-image: url('arxafon.png'); /* Yeni göndərdiyin şəkil */
+            background-repeat: repeat-x; /* Yan-yana uzadaraq bütün eni doldurur */
+            background-size: auto 100%; /* Hündürlüyə uyğunlaşıb yan-yana gedir */
+            z-index: 5; /* Yellənən şəkillərdən (10) geridə, səmadan (1) öndə */
+            pointer-events: none;
+        }
+
+        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA (HƏRƏKƏTLİ) --- */
+        .hanging-zone {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 10; /* Arxa fondan daha öndə */
             pointer-events: none;
         }
 
         .hanging-img {
+            position: absolute;
             transform-origin: top center;
             animation: swing ease-in-out infinite alternate;
-            width: 25%; /* Ölçünü xeyli kiçiltdik */
-            max-width: 180px; /* Maksimum böyüklük həddini azaltdıq */
             height: auto;
         }
 
-        .img-1 { animation-duration: 4.5s; }
-        .img-2 { animation-duration: 5.2s; animation-delay: 1s; }
+        .img-l1 { left: 2%; top: -25px; width: 22%; max-width: 150px; animation-duration: 4.5s; }
+        .img-l2 { left: 16%; top: -35px; width: 15%; max-width: 100px; animation-duration: 5.1s; animation-delay: 0.5s; }
+        .img-r1 { right: 2%; top: -25px; width: 22%; max-width: 150px; animation-duration: 4.8s; animation-delay: 1.2s; }
+        .img-r2 { right: 16%; top: -35px; width: 15%; max-width: 100px; animation-duration: 5.4s; animation-delay: 0.8s; }
 
         @keyframes swing {
             0% { transform: rotate(-8deg); }
@@ -169,7 +139,7 @@
             bottom: 0; left: 0;
             width: 100%; height: 35%;
             background-color: #4a148c;
-            z-index: 5;
+            z-index: 15; /* Səma və arxa fondan yuxarıda */
         }
 
         .wave {
@@ -200,15 +170,13 @@
         @media (max-width: 768px) {
             .moon { font-size: 50px; } 
             
-            /* Mobildə də şəkilləri balacalaşdırıb kənarlara tam sığışdırdıq */
-            .hanging-img { 
-                width: 32%; 
-                max-width: 120px; 
-            }
-            
-            .hanging-zone {
-                padding: 0 2%; /* Mobildə kənar boşluqları bir az da azaltdıq */
-            }
+            /* Sabit arxa fonu mobildə balacalaşdırırıq */
+            .static-bg-layer { height: 120px; top: -5px; }
+
+            .img-l1 { left: -2%; top: -15px; width: 30%; max-width: 110px; }
+            .img-l2 { left: 18%; top: -25px; width: 20%; max-width: 75px; }
+            .img-r1 { right: -2%; top: -15px; width: 30%; max-width: 110px; }
+            .img-r2 { right: 18%; top: -25px; width: 20%; max-width: 75px; }
 
             .bottom-section { height: 45%; } 
             .wave { top: -29px; height: 30px; } 
@@ -222,12 +190,17 @@
         <div class="sky-moving" id="sky">
             <div class="moon moon-1">🌙</div>
             <div class="moon moon-2">🌙</div>
-            </div>
+        </div>
     </div>
 
+    <div class="static-bg-layer"></div>
+
     <div class="hanging-zone">
-        <img src="sekil1.png" alt="Fənərlər 1" class="hanging-img img-1">
-        <img src="sekil2.png" alt="Fənərlər 2" class="hanging-img img-2">
+        <img src="sekil1.png" alt="Fənərlər Sol 1" class="hanging-img img-l1">
+        <img src="sekil2.png" alt="Fənərlər Sol 2" class="hanging-img img-l2">
+        
+        <img src="sekil2.png" alt="Fənərlər Sağ 1" class="hanging-img img-r1">
+        <img src="sekil1.png" alt="Fənərlər Sağ 2" class="hanging-img img-r2">
     </div>
 
     <div class="bottom-section">
@@ -245,12 +218,11 @@
 
     <script>
         const skyMoving = document.getElementById('sky');
-        const starCount = 200; // Ulduz sayını artırdım
+        const starCount = 200; 
 
         for (let i = 0; i < starCount; i++) {
             let star = document.createElement('div');
             
-            // Təsadüfi ulduz növünü seç
             const starType = Math.floor(Math.random() * 3);
             let typeClass = '';
             if (starType === 0) typeClass = 'star-dot';
@@ -262,9 +234,7 @@
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%'; 
             
-            // Animasiya gecikməsini təsadüfi et
             star.style.animationDelay = Math.random() * 2 + 's';
-            // Pulsasiya sürətini təsadüfi et
             star.style.animationDuration = (1 + Math.random() * 1) + 's';
             
             skyMoving.appendChild(star);
