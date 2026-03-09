@@ -73,7 +73,6 @@
         @media (max-width: 768px) {
             .moon { font-size: 55px; } 
             
-            /* Mobildə arxa fon böyük qorunur */
             .static-bg-layer { 
                 height: 320px; 
                 top: -10px;    
@@ -105,11 +104,9 @@
     </div>
 
     <script>
-        // Səma və Ulduzlar
         const skyMoving = document.getElementById('sky');
         for (let i = 0; i < 180; i++) {
             let star = document.createElement('div');
-            star.className = 'star';
             const starType = Math.floor(Math.random() * 3);
             let typeClass = (starType === 0) ? 'star-dot' : (starType === 1 ? 'star-cross-small' : 'star-cross-large');
             star.className = `star ${typeClass}`;
