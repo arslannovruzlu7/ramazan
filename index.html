@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sənin Üçün</title>
+    <title>Ramazan Sürprizi</title>
     <style>
         body, html {
             margin: 0; padding: 0;
             height: 100%; overflow: hidden;
             background-color: #070720; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none; /* Yazıların seçilməsini bağlayırıq ki, klikləyəndə mane olmasın */
         }
 
         /* --- SƏMA VƏ ULDUZLAR --- */
@@ -18,163 +19,119 @@
             width: 100%; height: 100%;
             overflow: hidden; z-index: 1;
         }
-
         .sky-moving {
-            position: absolute;
-            width: 200vw; height: 200vh;
+            position: absolute; width: 200vw; height: 200vh;
             top: -100vh; left: 0;
             animation: moveDiagonal 45s linear infinite; 
         }
-
         @keyframes moveDiagonal {
             0% { transform: translate(0, 0); }
             100% { transform: translate(-100vw, 100vh); }
         }
 
-        /* AY - Yumşaq və ulduzlarla harmoniya içində */
         .moon {
-            position: absolute;
-            font-size: 80px; color: #fff;
-            text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7, 0 0 60px rgba(255, 253, 231, 0.5);
-            filter: blur(1.5px); 
-            z-index: 2; 
+            position: absolute; font-size: 80px; color: #fff;
+            text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7;
+            filter: blur(1.5px); z-index: 2; 
         }
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; } 
 
-        /* ULDUZLAR - Sarımtıl parıltılı (Qara kənarsız) */
         .star {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
+            position: absolute; border-radius: 50%; pointer-events: none;
             background-color: #ffffff;
-            filter: drop-shadow(0 0 5px #ffd700) drop-shadow(0 0 10px #ffecb3);
+            filter: drop-shadow(0 0 5px #ffd700);
             animation: pulseStar 1.5s ease-in-out infinite alternate;
         }
-
-        .star::before, .star::after {
-            content: '';
-            position: absolute;
-            background: linear-gradient(180deg, rgba(255, 236, 179, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 236, 179, 0) 100%);
-            pointer-events: none;
-        }
-
-        .star.star-cross-small { width: 3px; height: 3px; }
-        .star.star-cross-small::before, .star.star-cross-small::after {
-            top: -150%; left: 50%; width: 1px; height: 400%;
-        }
-        .star.star-cross-small::before { transform: translateX(-50%) rotate(45deg); }
-        .star.star-cross-small::after { transform: translateX(-50%) rotate(-45deg); }
-
-        .star.star-cross-large {
-            width: 5px; height: 5px;
-            filter: drop-shadow(0 0 8px #ffd700) drop-shadow(0 0 15px #ffffff);
-        }
-        .star.star-cross-large::before, .star.star-cross-large::after {
-            top: -200%; left: 50%; width: 1.5px; height: 500%;
-        }
-        .star.star-cross-large::before { transform: translateX(-50%) rotate(45deg); }
-        .star.star-cross-large::after { transform: translateX(-50%) rotate(-45deg); }
-
-        .star.star-dot {
-            width: 2.5px; height: 2.5px;
-            filter: drop-shadow(0 0 4px #ffd700);
-            animation: none; 
-        }
-
         @keyframes pulseStar {
             0% { opacity: 0.7; transform: scale(0.9); }
             100% { opacity: 1; transform: scale(1.1); }
         }
 
-        /* --- SABİT ARXA FON --- */
+        /* --- DEKORASİYALAR --- */
         .static-bg-layer {
-            position: absolute;
-            top: -15px; left: 0;
+            position: absolute; top: -15px; left: 0;
             width: 100%; height: 250px; 
             background-image: url('arxafon.png'); 
-            background-repeat: repeat-x; 
-            background-size: auto 100%; 
+            background-repeat: repeat-x; background-size: auto 100%; 
             z-index: 5; pointer-events: none;
         }
 
-        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA --- */
         .hanging-zone {
-            position: absolute;
-            top: 0; left: 0;
+            position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: 10; pointer-events: none;
         }
-
         .hanging-img {
-            position: absolute;
-            transform-origin: top center;
+            position: absolute; transform-origin: top center;
             animation: swing ease-in-out infinite alternate;
-            height: auto;
-            will-change: transform;
-            backface-visibility: hidden;
-            transform: translateZ(0);
-            image-rendering: -webkit-optimize-contrast; 
+            height: auto; will-change: transform;
         }
-
-        /* Kompyuter ölçüləri */
         .img-l1 { left: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.5s; }
-        .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; animation-delay: 0.5s; }
-        .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; animation-delay: 1.2s; }
-        .img-r2 { right: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.4s; animation-delay: 0.8s; }
+        .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; }
+        .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; }
+        .img-r2 { right: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.4s; }
 
         @keyframes swing {
-            0% { transform: rotateZ(-8deg) translateZ(0); }
-            100% { transform: rotateZ(8deg) translateZ(0); }
+            0% { transform: rotateZ(-8deg); }
+            100% { transform: rotateZ(8deg); }
         }
 
-        /* --- DALĞA VƏ MƏTN HİSSƏSİ --- */
+        /* --- DAVUL VƏ İNTERAKTİV SAHƏ --- */
         .bottom-section {
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%; height: 35%;
-            background-color: #4a148c;
-            z-index: 15; 
+            position: absolute; bottom: 0; left: 0;
+            width: 100%; height: 40%;
+            background-color: #4a148c; z-index: 15; 
+        }
+        .wave { position: absolute; top: -49px; left: 0; width: 100%; height: 50px; }
+        .wave svg { display: block; width: 100%; height: calc(100% + 4px); transform: translateY(2px); }
+
+        .drum-container {
+            display: flex; flex-direction: column; align-items: center;
+            justify-content: center; height: 100%; position: relative;
         }
 
-        .wave {
-            position: absolute;
-            top: -49px; left: 0;
-            width: 100%; height: 50px;
+        /* Sehrli Yazı Stili */
+        #magic-text {
+            color: #ffd700; font-size: 22px; font-weight: bold;
+            margin-bottom: 20px; text-align: center; height: 30px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+            transition: all 0.5s ease;
+            max-width: 80%;
         }
 
-        .wave svg {
-            display: block; width: 100%; 
-            height: calc(100% + 4px); 
-            transform: translateY(2px); 
+        .text-hidden { opacity: 0; transform: scale(0.5) translateY(-20px) rotate(10deg); filter: blur(10px); }
+
+        /* Davul Dizaynı */
+        .drum {
+            width: 150px; height: 150px;
+            background: radial-gradient(circle, #f3e5f5 30%, #ce93d8 100%);
+            border: 8px solid #ffd700; border-radius: 50%;
+            position: relative; cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 20px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.1s;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .content-area {
-            padding: 20px;
-            text-align: center;
-            color: white;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-sizing: border-box;
+        .drum:active { transform: scale(0.95); }
+
+        /* Dalğalanma Effekti (Ripple) */
+        .ripple {
+            position: absolute; border: 2px solid #ffd700;
+            border-radius: 50%; pointer-events: none;
+            animation: ripple-out 0.6s ease-out;
+        }
+        @keyframes ripple-out {
+            0% { width: 0; height: 0; opacity: 1; }
+            100% { width: 300px; height: 300px; opacity: 0; }
         }
 
-        /* --- MOBİL ÜÇÜN (YENİLƏNDİ - FENELER BÖYÜDÜLDÜ) --- */
+        /* Mobil üçün */
         @media (max-width: 768px) {
-            .moon { font-size: 55px; } 
-            
-            /* Sabit arxa fonu mobildə bir az daha hündür etdik */
-            .static-bg-layer { height: 160px; top: -10px; }
-
-            /* Mobildə fənərlərin ölçüsü artırıldı (45% və 35%) */
-            .img-l1 { left: -5%; top: -15px; width: 45%; max-width: 180px; }
-            .img-l2 { left: 15%; top: -25px; width: 35%; max-width: 130px; }
-            .img-r1 { right: -5%; top: -15px; width: 45%; max-width: 180px; }
-            .img-r2 { right: 15%; top: -25px; width: 35%; max-width: 130px; }
-
-            .bottom-section { height: 42%; } 
-            .wave { top: -29px; height: 30px; } 
+            .drum { width: 120px; height: 120px; }
+            #magic-text { font-size: 18px; }
+            .bottom-section { height: 45%; }
         }
     </style>
 </head>
@@ -190,40 +147,79 @@
     <div class="static-bg-layer"></div>
 
     <div class="hanging-zone">
-        <img src="sekil1.png" alt="Sol 1" class="hanging-img img-l1">
-        <img src="sekil2.png" alt="Sol 2" class="hanging-img img-l2">
-        <img src="sekil2.png" alt="Sağ 1" class="hanging-img img-r1">
-        <img src="sekil1.png" alt="Sağ 2" class="hanging-img img-r2">
+        <img src="sekil1.png" class="hanging-img img-l1">
+        <img src="sekil2.png" class="hanging-img img-l2">
+        <img src="sekil2.png" class="hanging-img img-r1">
+        <img src="sekil1.png" class="hanging-img img-r2">
     </div>
 
     <div class="bottom-section">
         <div class="wave">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.72,187.4,99.82,233.19,83.74,277.6,71.62,321.39,56.44Z" fill="#4a148c"></path>
-            </svg>
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.72,187.4,99.82,233.19,83.74,277.6,71.62,321.39,56.44Z" fill="#4a148c"></path></svg>
         </div>
-        <div class="content-area">
-            <h2>Ramazan Bayramın Mübarək!</h2>
-            <p>Səninlə hər iftar bir bayramdır.</p>
+        
+        <div class="drum-container">
+            <div id="magic-text">Davula vur, sürprizi gör! 🥁</div>
+            <div class="drum" id="drum">
+                <span style="font-size: 40px;">🥁</span>
+            </div>
         </div>
     </div>
 
     <script>
+        // --- ULDUZLARIN YARADILMASI ---
         const skyMoving = document.getElementById('sky');
-        const starCount = 180; 
-
-        for (let i = 0; i < starCount; i++) {
+        for (let i = 0; i < 150; i++) {
             let star = document.createElement('div');
-            const starType = Math.floor(Math.random() * 3);
-            let typeClass = (starType === 0) ? 'star-dot' : (starType === 1 ? 'star-cross-small' : 'star-cross-large');
-            
-            star.className = `star ${typeClass}`;
+            star.className = 'star';
+            star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%'; 
             star.style.animationDelay = Math.random() * 2 + 's';
             skyMoving.appendChild(star);
         }
-    </script>
 
+        // --- DAVUL LOGİKASI ---
+        const drum = document.getElementById('drum');
+        const textElement = document.getElementById('magic-text');
+
+        // Sənin yazacağın 15 mesaj bura gələcək:
+        const messages = [
+            "Ramazan sənə hüzur gətirsin!",
+            "Səninlə hər iftar bir bayramdır.",
+            "Qəlbin nurla dolsun.",
+            "Bu il bütün duaların qəbul olsun.",
+            "Səni çox sevirəm!",
+            "Ramazanın bərəkəti üzərində olsun.",
+            "Sən mənim ən gözəl duamsan.",
+            "Gözlərindəki işıq heç vaxt sönməsin.",
+            "Süfrən həmişə ruzi-bərəkətli olsun.",
+            "Ayın gözəlliyi üzünə vursun.",
+            "Hər günün sevinc dolu keçsin.",
+            "Sənin gülüşün dünyanı bəzəyir.",
+            "Xoş gəldin ya Şəhri-Ramazan!",
+            "Səninlə hər şey daha gözəldir.",
+            "Bayrama qədər hər günün xoş olsun!"
+        ];
+
+        let messageIndex = 0;
+
+        drum.addEventListener('click', (e) => {
+            // 1. Dalğalanma Effekti (Ripple)
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            drum.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+
+            // 2. Sehrli Yazı Keçidi
+            textElement.classList.add('text-hidden');
+
+            setTimeout(() => {
+                messageIndex = (messageIndex + 1) % messages.length;
+                textElement.innerText = messages[messageIndex];
+                textElement.classList.remove('text-hidden');
+            }, 500);
+        });
+    </script>
 </body>
 </html>
