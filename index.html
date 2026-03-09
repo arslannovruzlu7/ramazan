@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bayramın Mübarək...</title>
+    <title>Ramazan Təqvimi</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display:ital,wght@0,700;1,400&display=swap');
 
         body, html {
             margin: 0; padding: 0;
             height: 100%; overflow: hidden;
-            background-color: #070720; 
+            background-color: #050515; 
             font-family: 'Playfair Display', serif;
             user-select: none;
         }
@@ -20,153 +20,128 @@
         .sky-moving { position: absolute; width: 200vw; height: 200vh; top: -100vh; left: 0; animation: moveDiagonal 45s linear infinite; }
         @keyframes moveDiagonal { 0% { transform: translate(0, 0); } 100% { transform: translate(-100vw, 100vh); } }
         
-        .moon { 
-            position: absolute; font-size: 80px; color: #fff; 
-            text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7; z-index: 2; 
-        }
-        .moon-1 { top: 120vh; left: 60vw; }
-        .moon-2 { top: 20vh; left: 160vw; }
-
         .star {
             position: absolute; border-radius: 50%; pointer-events: none;
-            background-color: #ffffff; filter: drop-shadow(0 0 5px #ffd700);
+            background-color: #ffffff; filter: drop-shadow(0 0 5px #fff);
             animation: pulseStar 1.5s ease-in-out infinite alternate;
         }
-        @keyframes pulseStar { 0% { opacity: 0.7; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
+        @keyframes pulseStar { 0% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1.1); } }
 
-        /* --- ARXA FON --- */
-        .static-bg-layer {
-            position: absolute; top: -20px; left: 0; width: 100%; height: 350px; 
-            background-image: url('arxafon.png'); background-repeat: repeat-x; 
-            background-size: auto 100%; z-index: 5; pointer-events: none;
-        }
-
-        /* --- AŞAĞI BƏNÖVŞƏYİ SAHƏ --- */
+        /* --- AŞAĞI BƏNÖVŞƏYİ/GÖY SAHƏ --- */
         .bottom-section {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 48%;
-            background-color: #4a148c; z-index: 15;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 55%;
+            background: linear-gradient(to bottom, #1a237e, #0d1137); z-index: 15;
         }
         .wave { position: absolute; top: -49px; left: 0; width: 100%; height: 50px; }
-        .wave svg { display: block; width: 100%; height: 52px; transform: translateY(2px); }
+        .wave svg { display: block; width: 100%; height: 52px; fill: #1a237e; }
 
         .content-area {
             display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
             perspective: 2000px;
         }
 
-        /* --- ŞƏKİLDƏKİ KİMİ ESTETİK TƏQVİM --- */
-        .calendar-box {
-            position: relative;
-            width: 220px; height: 280px;
-            margin-top: 10px;
+        /* TƏLİMAT YAZISI */
+        #instruction {
+            color: #ffffff; margin-bottom: 20px; font-weight: bold; 
+            letter-spacing: 2px; font-size: 13px; opacity: 0.8;
+            transition: opacity 1s ease;
         }
 
-        /* Sabit Qalın Başlıq (Düşməyən hissə) */
+        /* --- TƏQVİM QUTUSU --- */
+        .calendar-box {
+            position: relative;
+            width: 240px; height: 320px;
+        }
+
+        /* Sabit Qızılı Başlıq */
         .calendar-header-fixed {
-            position: absolute; top: -10px; left: 50%;
+            position: absolute; top: -12px; left: 50%;
             transform: translateX(-50%);
-            width: 90%; height: 45px;
-            background: linear-gradient(135deg, #d4af37, #aa8a2e); /* Qızılı rəng */
+            width: 85%; height: 40px;
+            background: linear-gradient(135deg, #c5a028, #8e721a);
             border-radius: 8px 8px 0 0;
-            z-index: 30; /* Ən öndə və sabit */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
             display: flex; justify-content: center; align-items: center;
         }
-        .header-dots {
-            width: 80%; display: flex; justify-content: space-between;
-        }
-        .header-dots span {
-            width: 8px; height: 8px; background: #332200; border-radius: 50%;
-        }
+        .header-dots { width: 70%; display: flex; justify-content: space-around; }
+        .header-dots span { width: 6px; height: 6px; background: #221a00; border-radius: 50%; }
 
         /* Təqvim Vərəqi */
         .leaf {
-            position: absolute; top: 25px; left: 0;
+            position: absolute; top: 20px; left: 0;
             width: 100%; height: 100%;
-            background: #ffffff;
+            background: #1e2a5a; /* Tünd Göy */
+            border: 1px solid rgba(255,255,255,0.1);
             border-radius: 0 0 10px 10px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             display: flex; flex-direction: column;
             box-sizing: border-box;
             transform-origin: top center;
             cursor: pointer;
             overflow: hidden;
-            border: 1px solid #ddd;
+            color: white;
         }
 
-        /* Vərəqin içindəki bəzəklər */
         .leaf-top-bar {
-            height: 40px; background: #fdfdfd; 
-            border-bottom: 2px double #d4af37;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: bold; color: #d4af37;
-            letter-spacing: 1px;
+            height: 45px; background: rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 15px; font-size: 14px; font-weight: bold;
         }
 
         .leaf-body {
-            flex: 1; padding: 20px;
+            flex: 1; padding: 25px;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background-image: radial-gradient(circle, #fff 60%, #f9f9f9 100%);
+            text-align: center;
         }
 
         .leaf-message {
             font-family: 'Dancing Script', cursive;
-            font-size: 22px; color: #2c3e50; text-align: center;
-            line-height: 1.5; text-shadow: 0.5px 0.5px 0px rgba(0,0,0,0.1);
+            font-size: 21px; line-height: 1.6;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
         .leaf-footer {
-            height: 35px; border-top: 1px solid #eee;
+            height: 35px; font-size: 11px; opacity: 0.5;
             display: flex; align-items: center; justify-content: center;
-            font-size: 12px; color: #999; font-style: italic;
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
 
         /* SÜZÜLMƏ ANİMASİYASI */
         .leaf-fall {
             animation: elegantFall 2.2s cubic-bezier(0.445, 0.05, 0.55, 0.95) forwards;
             pointer-events: none;
-            z-index: 25;
         }
 
         @keyframes elegantFall {
             0% { transform: rotateX(0deg); opacity: 1; }
-            15% { transform: rotateX(-30deg) rotateY(10deg); }
-            30% { transform: rotateX(-20deg) rotateZ(-15deg) translateX(30px) translateY(20px); }
-            60% { transform: translateY(250px) rotateZ(25deg) rotateY(45deg); opacity: 0.7; }
-            100% { transform: translateY(700px) rotateZ(60deg) rotateX(120deg); opacity: 0; }
+            30% { transform: rotateX(-20deg) rotateZ(-10deg) translateX(20px) translateY(20px); }
+            100% { transform: translateY(800px) rotateZ(45deg) rotateX(100deg); opacity: 0; }
         }
 
-        /* MOBİL */
         @media (max-width: 768px) {
-            .moon { font-size: 55px; } 
-            .static-bg-layer { height: 320px; }
-            .bottom-section { height: 52%; } 
-            .calendar-box { width: 200px; height: 260px; }
-            .leaf-message { font-size: 19px; }
+            .calendar-box { width: 210px; height: 280px; }
+            .leaf-message { font-size: 18px; }
         }
     </style>
 </head>
 <body>
 
     <div class="sky-wrapper">
-        <div class="sky-moving" id="sky">
-            <div class="moon moon-1">🌙</div>
-            <div class="moon moon-2">🌙</div>
-        </div>
+        <div class="sky-moving" id="sky"></div>
     </div>
-
-    <div class="static-bg-layer"></div>
 
     <div class="bottom-section">
         <div class="wave">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.72,187.4,99.82,233.19,83.74,277.6,71.62,321.39,56.44Z" fill="#4a148c"></path></svg>
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.72,187.4,99.82,233.19,83.74,277.6,71.62,321.39,56.44Z"></path></svg>
         </div>
         
         <div class="content-area">
-            <div style="color:#d4af37; margin-bottom:15px; font-weight:bold; letter-spacing:3px; font-size:14px;">TƏQVİMİ CEVİRMEK ÜÇÜN TOXUN</div>
+            <div id="instruction">TƏQVİMİ ÇEVİRMƏK ÜÇÜN TOXUN</div>
             
             <div class="calendar-box" id="calendar">
-                <div class="calendar-header-fixed">
+                <div class="calendar-header-fixed" id="cal-header">
                     <div class="header-dots"><span></span><span></span><span></span><span></span></div>
                 </div>
                 </div>
@@ -174,11 +149,12 @@
     </div>
 
     <script>
+        // Ulduzlar
         const skyMoving = document.getElementById('sky');
-        for (let i = 0; i < 180; i++) {
+        for (let i = 0; i < 150; i++) {
             let star = document.createElement('div');
             star.className = 'star';
-            star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
+            star.style.width = star.style.height = (Math.random() * 2 + 1) + 'px';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%'; 
             star.style.animationDelay = Math.random() * 2 + 's';
@@ -186,71 +162,75 @@
         }
 
         const calendar = document.getElementById('calendar');
-        
+        const instruction = document.getElementById('instruction');
+        const calHeader = document.getElementById('cal-header');
+
         const messages = [
-            "Səninlə hər iftar bir bayramdır. ❤️",
-            "Gözlərindəki nur ulduzlardan daha parlaqdır. ✨",
-            "Sən mənim ən gözəl duamsan. 🤲",
-            "Bu ay qəlbinə hüzur, ömrünə sevgi gətirsin.",
-            "Sənin gülüşün mənim dünyamı işıqlandırır. 🌸",
-            "Yaxşı ki, varsan, yaxşı ki, mənimləsən.",
-            "Dualarımda həmişə adın var, əzizim.",
-            "Ramazanın bərəkəti sevgimizə dolsun. 🌙",
-            "Sən mənim həyatımdakı ən şirin təsadüfsən. 🥰",
-            "Səni ulduzlar qədər çox sevirəm! ⭐",
-            "Hər sahurda səni düşünmək ən gözəl adətimdir.",
-            "Göyüzü şahid olsun ki, sən mənim hər şeyimsən.",
-            "Bu vərəq sənin üçün ən səmimi gülüşümdür.",
-            "Mənim Ramazanım sənin gəlişinlə başladı.",
-            "Ürəyin həmişə sevgiylə döyünsün. ❤️",
-            "Səninlə keçən hər an bir möcüzədir.",
-            "Ramazanın nuru üzünə vursun. ✨",
-            "Sən mənim qəlbimin ən dərin küncündəsən.",
-            "Hər günün sevinc dolu keçsin.",
-            "Səni çox sevirəm, mənim ulduzum! 🌟"
+            "Ramazanın ilk günü mübarək! 🌙", "Səninlə hər iftar bir bayramdır. ❤️", "Duaların qəbul olsun. 🤲",
+            "Bu ay qəlbinə hüzur gətirsin. ✨", "Gülüşün dünyamı işıqlandırır. 🌸", "Sən mənim ən gözəl duamsan.",
+            "Səbrin sonu salamtdır. 😊", "Yaxşı ki, varsan, əzizim.", "Ramazan bərəkəti səninlə olsun.",
+            "Qəlbin nurla dolsun. 🌟", "Səni hər gün daha çox sevirəm.", "Göyüzü qədər təmiz qal. ☁️",
+            "Xoş gəldin, ya Şəhri-Ramazan!", "Hər sahurda ağlımdasan. 🌙", "Möcüzələr səni tapsın. ✨",
+            "Səninlə keçən hər an dəyərlidir.", "Süfrəniz ruzi-bərəkətli olsun.", "Qəlbinin səsinə qulaq as. ❤️",
+            "Sən həyatın ən şirin payısan.", "Dualarımda həmişə varsan. 🤲", "Ulduzlar sənə salam deyir. ⭐",
+            "Ramazan hüzuru ruhuna dolsun.", "Səbr et, hər şey gözəl olacaq.", "Sevgi ən böyük ruzidir. 🥰",
+            "Gözlərindəki işıq heç sönməsin.", "Həyat səninlə daha rənglidir.", "Dua ilə açılan qapılar çox olsun.",
+            "Mehirli baxışların kifayətdir. ✨", "Bayrama doğru addım-addım...", "Ramazan Bayramın Mübarək! 🎊"
         ];
 
-        let currentIndex = 0;
+        let currentDay = 0;
+        const totalDays = 30;
 
-        function createLeaf(index) {
-            const leaf = document.createElement('div');
-            leaf.className = 'leaf';
-            leaf.style.zIndex = 25 - (index % 20); 
-            
-            leaf.innerHTML = `
-                <div class="leaf-top-bar">GÜN ${index + 1}</div>
-                <div class="leaf-body">
-                    <div class="leaf-message">${messages[index % messages.length]}</div>
-                </div>
-                <div class="leaf-footer">© 2026 Sevgisi</div>
-            `;
-            return leaf;
+        // Vərəqləri yarat (30 dənə)
+        function initCalendar() {
+            for (let i = totalDays - 1; i >= 0; i--) {
+                const leaf = document.createElement('div');
+                leaf.className = 'leaf';
+                leaf.style.zIndex = totalDays - i;
+                leaf.innerHTML = `
+                    <div class="leaf-top-bar">
+                        <span>🌙 GÜN ${i + 1}</span>
+                        <span style="font-size:10px; opacity:0.6;">RAMAZAN 2026</span>
+                    </div>
+                    <div class="leaf-body">
+                        <div class="leaf-message">${messages[i]}</div>
+                    </div>
+                    <div class="leaf-footer">Sənin üçün sevgilərlə</div>
+                `;
+                calendar.appendChild(leaf);
+            }
         }
 
-        // Başlanğıc vərəqləri
-        calendar.appendChild(createLeaf(currentIndex + 1));
-        const firstLeaf = createLeaf(currentIndex);
-        calendar.appendChild(firstLeaf);
+        initCalendar();
 
-        calendar.addEventListener('click', (e) => {
-            const leaves = calendar.querySelectorAll('.leaf');
-            const topLeaf = leaves[leaves.length - 1];
+        calendar.addEventListener('click', () => {
+            const leaves = document.querySelectorAll('.leaf:not(.leaf-fall)');
+            if (leaves.length === 0) return;
 
-            if (!topLeaf || topLeaf.classList.contains('leaf-fall')) return;
+            // Yazını yox et
+            if (instruction.style.opacity !== "0") {
+                instruction.style.opacity = "0";
+            }
 
-            // Qopma animasiyası
+            // Ən üstdəki vərəqi götür
+            const topLeaf = leaves[0];
             topLeaf.classList.add('leaf-fall');
-            
+
+            currentDay++;
+
+            // Əgər sonuncu vərəqdirsə, başlığı da yox et
+            if (currentDay === totalDays) {
+                setTimeout(() => {
+                    calHeader.style.transition = "opacity 1s ease";
+                    calHeader.style.opacity = "0";
+                }, 1000);
+            }
+
+            // Vərəqi müəyyən vaxtdan sonra sil
             setTimeout(() => {
                 topLeaf.remove();
-                currentIndex++;
-                
-                // Altdan yeni vərəq əlavə et (sonsuz döngə)
-                const nextLeaf = createLeaf(currentIndex + 1);
-                calendar.prepend(nextLeaf);
             }, 2200);
         });
     </script>
 </body>
 </html>
-
