@@ -59,6 +59,7 @@
         .hanging-zone { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
         .hanging-img { position: absolute; transform-origin: top center; animation: swing ease-in-out infinite alternate; height: auto; will-change: transform; backface-visibility: hidden; transform: translateZ(0); }
         
+        /* Ölçüləri böyük saxladıq */
         .img-l1 { left: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.5s; }
         .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; animation-delay: 0.5s; }
         .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; animation-delay: 1.2s; }
@@ -77,112 +78,24 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
         }
 
-        /* --- FAL QURABİYƏSİ STİLLƏRİ --- */
-        .fortune-container {
-            display: flex;
-            align-items: center;
-            background-color: #202124; 
-            padding: 10px 20px;
-            border-radius: 24px;
-            width: fit-content;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            transition: transform 0.2s ease, background-color 0.2s ease;
-            z-index: 20;
-        }
-        .fortune-container:hover { background-color: #303134; transform: scale(1.02); }
-
-        .cookie-icon-wrapper {
-            background-color: #303134; 
-            border-radius: 50%;
-            width: 48px;
-            height: 48px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-        }
-        .cookie-icon { font-size: 26px; }
-
-        .fortune-title {
-            color: #e8eaed; 
-            font-family: Arial, sans-serif;
-            font-size: 18px;
-            font-weight: 500;
-        }
-
-        /* Çatlama Animasiyası */
-        @keyframes crackShake {
-            0% { transform: translate(2px, 2px) rotate(0deg); }
-            10% { transform: translate(-2px, -3px) rotate(-2deg); }
-            20% { transform: translate(-4px, 0px) rotate(2deg); }
-            30% { transform: translate(4px, 3px) rotate(0deg); }
-            40% { transform: translate(2px, -2px) rotate(2deg); }
-            50% { transform: translate(-2px, 3px) rotate(-2deg); }
-            60% { transform: translate(-4px, 2px) rotate(0deg); }
-            70% { transform: translate(4px, 2px) rotate(-2deg); }
-            80% { transform: translate(-2px, -2px) rotate(2deg); }
-            90% { transform: translate(2px, 3px) rotate(0deg); }
-            100% { transform: translate(2px, -3px) rotate(-2deg); }
-        }
-        .cracking { animation: crackShake 0.6s cubic-bezier(.36,.07,.19,.97) both infinite; }
-
-        /* Kağız (Nəticə) Stilləri */
-        .fortune-paper-wrapper {
-            display: none; 
-            flex-direction: column;
-            align-items: center;
-            animation: popUpPaper 0.6s ease-out forwards;
-        }
-        @keyframes popUpPaper {
-            0% { opacity: 0; transform: translateY(30px) scale(0.8); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .fortune-paper {
-            background: linear-gradient(135deg, #fffde7, #fff9c4);
-            padding: 20px 30px;
-            border-radius: 4px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            max-width: 300px;
-            text-align: center;
-            color: #d32f2f;
-            font-weight: bold;
-            font-size: 18px;
-            border-left: 2px dashed #ccc;
-            border-right: 2px dashed #ccc;
-        }
-
-        #reset-btn {
-            margin-top: 20px;
-            padding: 8px 25px;
-            background-color: transparent;
-            border: 1px solid #e8eaed;
-            color: #e8eaed;
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        #reset-btn:hover { background-color: rgba(255,255,255,0.1); }
-
-
         /* --- MOBİL ÜÇÜN --- */
         @media (max-width: 768px) {
             .moon { font-size: 55px; } 
-            .static-bg-layer { height: 320px; top: -10px; }
+            
+            /* Mobildə arxa fon xeyli böyüdüldü (YENİLƏNDİ) */
+            .static-bg-layer { 
+                height: 320px; /* Was 220px */
+                top: -10px;    /* top mövqeyini də tənzimlədik */
+            }
+
+            /* Yellənən fənərlər mobildə eynilə qorunur */
             .img-l1 { left: -5%; top: -15px; width: 45%; max-width: 180px; }
             .img-l2 { left: 15%; top: -25px; width: 35%; max-width: 130px; }
             .img-r1 { right: -5%; top: -15px; width: 45%; max-width: 180px; }
             .img-r2 { right: 15%; top: -25px; width: 35%; max-width: 130px; }
+            
             .bottom-section { height: 45%; } 
             .wave { top: -29px; height: 30px; } 
-            
-            .fortune-container { padding: 8px 15px; }
-            .fortune-title { font-size: 16px; }
-            .cookie-icon-wrapper { width: 40px; height: 40px; }
-            .cookie-icon { font-size: 22px; }
-            .fortune-paper { font-size: 16px; padding: 15px 20px; max-width: 85%; }
         }
     </style>
 </head>
@@ -210,24 +123,11 @@
         </div>
         
         <div class="content-area">
-            <div class="fortune-container" id="google-cookie">
-                <div class="cookie-icon-wrapper">
-                    <span class="cookie-icon">🥠</span>
-                </div>
-                <span class="fortune-title">Fortune cookie (Şans Kurabiyesi)</span>
             </div>
-
-            <div class="fortune-paper-wrapper" id="paper-wrapper">
-                <div class="fortune-paper">
-                    <p id="fortune-text">Burada şans yazısı olacaq</p>
-                </div>
-                <button id="reset-btn">Yenidən sına</button>
-            </div>
-        </div>
     </div>
 
     <script>
-        // --- 1. SƏMA VƏ ULDUZLARIN YARADILMASI ---
+        // Səma və Ulduzlar eynilə qorunur
         const skyMoving = document.getElementById('sky');
         for (let i = 0; i < 180; i++) {
             let star = document.createElement('div');
@@ -241,65 +141,9 @@
             star.style.animationDelay = Math.random() * 2 + 's';
             skyMoving.appendChild(star);
         }
-
-        // --- 2. 25 ƏDƏD ŞANS CÜMLƏSİ (Bura öz cümlələrini də yaza bilərsən) ---
-        const sentences = [
-            "Bu gün səni gözəl bir sürpriz gözləyir.",
-            "Gülümsə, çünki ən yaxşı anlar hələ qarşıdadır.",
-            "Gözləmədiyin birindən xoş xəbər alacaqsan.",
-            "Cəsarətli ol, atdığın addım sənə uğur gətirəcək.",
-            "Xəyalların düşündüyündən daha yaxındır.",
-            "Bu gün ətrafındakılara yaydığın enerji sənə geri dönəcək.",
-            "Səbr et, çünki ən gözəl şeylər zaman alır.",
-            "İçindəki səsə qulaq as, o doğru yolu bilir.",
-            "Gələcəkdə səni böyük bir sevinc gözləyir.",
-            "Özünə inan, sən bacaracaqsan.",
-            "Bu gün kiçik bir təsadüf böyük bir xoşbəxtliyə səbəb ola bilər.",
-            "Həyatın sənə hazırladığı gözəl hədiyyələr var.",
-            "Zəhmətinin bəhrəsini görməyə az qaldı.",
-            "Yeni fürsətlər qapını döymək üzrədir.",
-            "Hər şeyin öz vaxtı var, sən sadəcə anın dadını çıxar.",
-            "Qəlbindən keçən o arzu tezliklə gerçək olacaq.",
-            "Çətinliklər səni daha da gücləndirir.",
-            "Bu gün özünə bir yaxşılıq et.",
-            "Kimsə sənin təbəssümünlə xöşbəxt olur.",
-            "Şans bu gün sənin tərəfindədir.",
-            "Gözlənilməz bir fürsət həyatını dəyişə bilər.",
-            "Keçmişi burax, gələcək çox daha parlaqdır.",
-            "Sən düşündüyündən daha güclüsən.",
-            "Gözəl günlər artıq yoldadır.",
-            "Hər bitiş yeni və daha gözəl bir başlanğıcdır."
-        ];
-
-        // --- 3. KLİKLƏMƏ VƏ ÇATLAMA MƏNTİQİ ---
-        const cookieBtn = document.getElementById('google-cookie');
-        const paperWrapper = document.getElementById('paper-wrapper');
-        const fortuneText = document.getElementById('fortune-text');
-        const resetBtn = document.getElementById('reset-btn');
-
-        cookieBtn.addEventListener('click', () => {
-            // 1. Düyməyə titrəmə/çatlama animasiyası veririk
-            cookieBtn.classList.add('cracking');
-
-            // 2. 0.8 saniyə (800ms) titrədikdən sonra onu gizlədib kağızı çıxarırıq
-            setTimeout(() => {
-                cookieBtn.classList.remove('cracking');
-                cookieBtn.style.display = 'none'; // Qurabiyəni gizlət
-                
-                // Random cümləni seç və yaz
-                const randomIndex = Math.floor(Math.random() * sentences.length);
-                fortuneText.innerText = sentences[randomIndex];
-
-                // Kağızı göstər
-                paperWrapper.style.display = 'flex';
-            }, 800); 
-        });
-
-        // "Yenidən sına" düyməsinin funksiyası (istəsən çıxara bilərsən)
-        resetBtn.addEventListener('click', () => {
-            paperWrapper.style.display = 'none';
-            cookieBtn.style.display = 'flex';
-        });
+        
+        // Klikləmə məntiqləri buradan silindi
     </script>
 </body>
 </html>
+
