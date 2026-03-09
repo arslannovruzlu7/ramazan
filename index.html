@@ -2,73 +2,70 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sənin Üçün</title>
     <style>
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden; /* Ekranı aşan hissələri gizlədirik */
-            background-color: #070720; /* Tünd mavi səma fonu */
+            overflow: hidden;
+            background-color: #070720; 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* --- SƏMA VƏ ULDUZLAR HİSSƏSİ --- */
+        /* --- SƏMA VƏ ULDUZLAR --- */
         .sky-wrapper {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             overflow: hidden;
             z-index: 1;
         }
 
-        /* Səma sağ-yuxarıdan sol-aşağıya hərəkət edir */
         .sky-moving {
             position: absolute;
-            width: 200vw; 
-            height: 200vh;
-            top: -100vh; /* Yuxarıdan və sağdan ehtiyat məsafə buraxırıq */
-            left: 0;
-            animation: moveDiagonal 25s linear infinite;
+            width: 200vw; height: 200vh;
+            top: -100vh; left: 0;
+            animation: moveDiagonal 30s linear infinite;
         }
 
         @keyframes moveDiagonal {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(-100vw, 100vh); } /* Sol alta sürüşmə */
+            100% { transform: translate(-100vw, 100vh); }
         }
 
-        /* Hilal (Ay) */
         .moon {
             position: absolute;
             font-size: 80px;
             color: #fff;
             text-shadow: 0 0 25px rgba(255, 255, 210, 0.9);
         }
-        /* İki ay var ki, biri dalğanın arxasında itəndə, digəri yuxarıdan gəlsin */
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; } 
 
-        /* Parıldayan Ulduzlar */
         .star {
             position: absolute;
-            background-color: white;
+            background-color: #ffffff;
             border-radius: 50%;
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-            animation: twinkle 2s infinite alternate;
+            animation: twinkle 2s ease-in-out infinite alternate;
         }
 
         @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.3); }
+            0% { 
+                opacity: 0.5; transform: scale(0.9); 
+                box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+            }
+            100% { 
+                opacity: 1; transform: scale(1.4); 
+                box-shadow: 0 0 12px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 215, 0, 0.5); 
+            }
         }
 
-        /* --- FƏNƏRLƏR HİSSƏSİ --- */
+        /* --- FƏNƏRLƏR --- */
         .lanterns-container {
             position: absolute;
-            top: 0;
-            width: 100%;
+            top: 0; width: 100%;
             display: flex;
             justify-content: space-evenly;
             z-index: 10;
@@ -82,32 +79,23 @@
             animation: swing 3s ease-in-out infinite alternate;
         }
 
-        /* Fənərin qızılı ipi */
         .lantern-box::before {
             content: '';
             width: 2px;
-            background-color: rgba(255, 215, 0, 0.5); /* Qızılı rəng ip */
+            background-color: rgba(255, 215, 0, 0.5);
             display: block;
         }
 
-        .lantern {
-            font-size: 50px;
-            margin-top: -5px;
-        }
+        .lantern { font-size: 50px; margin-top: -5px; }
 
-        /* İplərin uzunluğu və yellənmə sürətləri */
         .lantern-box:nth-child(1) { animation-duration: 3.2s; }
         .lantern-box:nth-child(1)::before { height: 40px; }
-
         .lantern-box:nth-child(2) { animation-duration: 4.1s; animation-delay: 0.5s; }
         .lantern-box:nth-child(2)::before { height: 70px; }
-
         .lantern-box:nth-child(3) { animation-duration: 3.8s; animation-delay: 1.2s; }
         .lantern-box:nth-child(3)::before { height: 30px; }
-
         .lantern-box:nth-child(4) { animation-duration: 4.5s; animation-delay: 0.2s; }
         .lantern-box:nth-child(4)::before { height: 60px; }
-
         .lantern-box:nth-child(5) { animation-duration: 3.5s; animation-delay: 0.8s; }
         .lantern-box:nth-child(5)::before { height: 45px; }
 
@@ -116,34 +104,29 @@
             100% { transform: rotate(10deg); }
         }
 
-        /* --- AŞAĞI DALĞALI BƏNÖVŞƏYİ HİSSƏ --- */
+        /* --- DALĞA VƏ MƏTN HİSSƏSİ --- */
         .bottom-section {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 35%; /* Səma ilə ayrılan yerin hündürlüyü */
-            background-color: #4a148c; /* Bənövşəyi */
-            z-index: 5; /* Səmadan öndə, fənərlərdən arxada */
+            bottom: 0; left: 0;
+            width: 100%; height: 35%;
+            background-color: #4a148c;
+            z-index: 5;
         }
 
-        /* Dalğa Forması (SVG) */
         .wave {
             position: absolute;
-            top: -50px; /* Dalğanı yuxarı qaldırırıq */
-            left: 0;
-            width: 100%;
-            height: 50px;
+            top: -49px; left: 0;
+            width: 100%; height: 50px;
             line-height: 0;
         }
 
+        /* Qırılma xəttinin ləğvi üçün hündürlüyü artırıb bir az aşağı sürüşdürdük */
         .wave svg {
-            display: block;
-            width: 100%;
-            height: 100%;
+            display: block; width: 100%; 
+            height: calc(100% + 2px); 
+            transform: translateY(1px);
         }
 
-        /* Sənin yazacağın mətnlərin yeri */
         .content-area {
             padding: 20px;
             text-align: center;
@@ -152,8 +135,25 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            box-sizing: border-box;
         }
 
+        /* --- MOBİL ÜÇÜN XÜSUSİ DÜZƏLİŞLƏR (RESPONSIVE) --- */
+        @media (max-width: 768px) {
+            .moon { font-size: 50px; } 
+            .lantern { font-size: 35px; } 
+            .lantern-box::before { width: 1.5px; } 
+            
+            .lantern-box:nth-child(1)::before { height: 25px; }
+            .lantern-box:nth-child(2)::before { height: 45px; }
+            .lantern-box:nth-child(3)::before { height: 20px; }
+            .lantern-box:nth-child(4)::before { height: 40px; }
+            .lantern-box:nth-child(5)::before { height: 30px; }
+
+            .bottom-section { height: 45%; } 
+            .wave { top: -29px; height: 30px; } 
+            .wave svg { height: calc(100% + 2px); transform: translateY(1px); }
+        }
     </style>
 </head>
 <body>
@@ -162,7 +162,7 @@
         <div class="sky-moving" id="sky">
             <div class="moon moon-1">🌙</div>
             <div class="moon moon-2">🌙</div>
-            </div>
+        </div>
     </div>
 
     <div class="lanterns-container">
@@ -181,13 +181,12 @@
         </div>
         
         <div class="content-area">
-            <h2>Xüsusi Mətnlər Bura Gələcək</h2>
-            <p>Bura iftar sayğacı, onun üçün yazdığın gözəl sözlər və ya sürprizlər yerləşdirə bilərsən.</p>
+            <h2>Ramazan Sürprizi</h2>
+            <p>Bura xüsusi sözlər gələcək.</p>
         </div>
     </div>
 
     <script>
-        // Səmaya 150 dənə parıldayan ulduz səpirik
         const skyMoving = document.getElementById('sky');
         const starCount = 150; 
 
@@ -195,16 +194,13 @@
             let star = document.createElement('div');
             star.className = 'star';
             
-            // Ulduzların ölçüləri 1px ilə 4px arası təsadüfidir
             let size = Math.random() * 3 + 1;
             star.style.width = size + 'px';
             star.style.height = size + 'px';
             
-            // Bütün hərəkət edən qatın içinə dağıdırıq
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%'; 
             
-            // Bütün ulduzlar eyni anda yanıb sönməsin deyə fərqli gecikmələr veririk
             star.style.animationDelay = Math.random() * 2 + 's';
             
             skyMoving.appendChild(star);
