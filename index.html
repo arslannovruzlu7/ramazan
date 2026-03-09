@@ -14,7 +14,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* --- SƏMA VƏ ULDUZLAR --- */
+        /* --- SƏMA VƏ ULDUZLAR (YENİLƏNİB) --- */
         .sky-wrapper {
             position: absolute;
             top: 0; left: 0;
@@ -27,7 +27,8 @@
             position: absolute;
             width: 200vw; height: 200vh;
             top: -100vh; left: 0;
-            animation: moveDiagonal 30s linear infinite;
+            /* Sol aşağıya (diaqonal) hərəkət */
+            animation: moveDiagonal 45s linear infinite; /* Hərəkət sürətini azaltdım */
         }
 
         @keyframes moveDiagonal {
@@ -40,29 +41,98 @@
             font-size: 80px;
             color: #fff;
             text-shadow: 0 0 25px rgba(255, 255, 210, 0.9);
+            z-index: 2; /* Ulduzların bəziləri ayın arxasında olsun */
         }
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; } 
 
+        /* Ulduzların kəskin parlaması - yeni tərzi (image_5.png-dəki kimi) */
         .star {
             position: absolute;
-            background-color: #ffffff;
             border-radius: 50%;
-            animation: twinkle 2s ease-in-out infinite alternate;
+            pointer-events: none;
+            /* Ana ağ nöqtə */
+            background-color: white;
+            /* Brilyant kəsimi kimi kəskin parıltı üçün ana kölgə */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 
+                        0 0 20px rgba(255, 255, 255, 0.6);
+            /* Parlaqlığı yanıb-sönmədən daha kəskin etmək üçün animasiya */
+            animation: pulseStar 1.5s ease-in-out infinite alternate;
         }
 
-        @keyframes twinkle {
+        /* Ulduzların kəskin X-şəkilli parıltıları */
+        .star::before, .star::after {
+            content: '';
+            position: absolute;
+            background-color: white;
+            /* Brilyant kəsimi kimi dar gradient */
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 50%, rgba(255,255,255,0) 100%);
+            /* Parıltıların kəskin x-şəkilli təsirini artırmaq üçün süzgəclər */
+            filter: blur(1px) contrast(200%);
+            pointer-events: none;
+        }
+
+        /* Daha kiçik, kəskin x-şəkilli ulduz */
+        .star.star-cross-small {
+            width: 3px;
+            height: 3px;
+        }
+        .star.star-cross-small::before, .star.star-cross-small::after {
+            top: -150%;
+            left: 50%;
+            width: 1px;
+            height: 400%;
+        }
+        .star.star-cross-small::before {
+            transform: translateX(-50%) rotate(45deg);
+        }
+        .star.star-cross-small::after {
+            transform: translateX(-50%) rotate(-45deg);
+        }
+
+        /* Daha böyük, kəskin x-şəkilli ulduz (image_5.png-dəki kimi daha parlaq) */
+        .star.star-cross-large {
+            width: 6px;
+            height: 6px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 1), 
+                        0 0 30px rgba(255, 255, 255, 0.8);
+        }
+        .star.star-cross-large::before, .star.star-cross-large::after {
+            top: -200%;
+            left: 50%;
+            width: 2px;
+            height: 500%;
+        }
+        .star.star-cross-large::before {
+            transform: translateX(-50%) rotate(45deg);
+        }
+        .star.star-cross-large::after {
+            transform: translateX(-50%) rotate(-45deg);
+        }
+
+        /* Sadəcə sabit, parlaq nöqtə (daha az intensiv) */
+        .star.star-dot {
+            width: 2px;
+            height: 2px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 1);
+            animation: none; /* Bu növ daha sabit qalır */
+        }
+
+        /* Parlaqlığı yanıb-sönmədən kəskin pulsasiya ilə dəyişdirmək */
+        @keyframes pulseStar {
             0% { 
-                opacity: 0.5; transform: scale(0.9); 
-                box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
+                opacity: 0.8; 
+                transform: scale(0.95); 
+                filter: brightness(100%);
             }
             100% { 
-                opacity: 1; transform: scale(1.4); 
-                box-shadow: 0 0 8px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 215, 0, 0.4); 
+                opacity: 1; 
+                transform: scale(1.1); 
+                filter: brightness(150%);
             }
         }
 
-        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA (YENİLƏNİB) --- */
+        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA --- */
         .hanging-zone {
             position: absolute;
             top: 0;
@@ -126,7 +196,7 @@
             box-sizing: border-box;
         }
 
-        /* --- MOBİL ÜÇÜN DÜZƏLİŞLƏR (YENİLƏNİB) --- */
+        /* --- MOBİL ÜÇÜN DÜZƏLİŞLƏR --- */
         @media (max-width: 768px) {
             .moon { font-size: 50px; } 
             
@@ -152,7 +222,7 @@
         <div class="sky-moving" id="sky">
             <div class="moon moon-1">🌙</div>
             <div class="moon moon-2">🌙</div>
-        </div>
+            </div>
     </div>
 
     <div class="hanging-zone">
@@ -175,20 +245,27 @@
 
     <script>
         const skyMoving = document.getElementById('sky');
-        const starCount = 150; 
+        const starCount = 200; // Ulduz sayını artırdım
 
         for (let i = 0; i < starCount; i++) {
             let star = document.createElement('div');
-            star.className = 'star';
             
-            let size = Math.random() * 3 + 1;
-            star.style.width = size + 'px';
-            star.style.height = size + 'px';
+            // Təsadüfi ulduz növünü seç
+            const starType = Math.floor(Math.random() * 3);
+            let typeClass = '';
+            if (starType === 0) typeClass = 'star-dot';
+            else if (starType === 1) typeClass = 'star-cross-small';
+            else typeClass = 'star-cross-large';
+            
+            star.className = `star ${typeClass}`;
             
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%'; 
             
+            // Animasiya gecikməsini təsadüfi et
             star.style.animationDelay = Math.random() * 2 + 's';
+            // Pulsasiya sürətini təsadüfi et
+            star.style.animationDuration = (1 + Math.random() * 1) + 's';
             
             skyMoving.appendChild(star);
         }
