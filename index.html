@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramazan Sürprizi</title>
+    <title>Ramazan Gündəliyi</title>
     <style>
         body, html {
             margin: 0; padding: 0;
@@ -27,7 +27,7 @@
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; }
 
-        /* ULDUZLAR - Sarımtıl parıltılı */
+        /* ULDUZLAR */
         .star {
             position: absolute; border-radius: 50%; pointer-events: none;
             background-color: #ffffff; filter: drop-shadow(0 0 5px #ffd700);
@@ -49,7 +49,7 @@
         .star.star-dot { width: 2.5px; height: 2.5px; filter: drop-shadow(0 0 4px #ffd700); animation: none; }
         @keyframes pulseStar { 0% { opacity: 0.7; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
 
-        /* --- DEKORASİYALAR (TƏRPƏNMƏZ ARXA FON) --- */
+        /* --- TƏRPƏNMƏZ ARXA FON --- */
         .static-bg-layer {
             position: absolute; top: -20px; left: 0; width: 100%; 
             height: 350px; 
@@ -66,15 +66,135 @@
         .wave svg { display: block; width: 100%; height: calc(100% + 4px); transform: translateY(2px); }
 
         .content-area {
-            display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
+            position: relative; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        /* --- MOBİL ÜÇÜN --- */
+        .title-text {
+            color: #ffd700; font-size: 16px; margin-bottom: 15px;
+            letter-spacing: 3px; text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            font-weight: bold;
+        }
+
+        /* ========================================= */
+        /* MÜKƏMMƏL 3D GÜNDƏLİK DİZAYNI (PREMIUM) */
+        /* ========================================= */
+        
+        .book-scene {
+            perspective: 1500px; /* 3D Dərinlik */
+            width: 100%; height: 240px;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .book {
+            position: relative;
+            width: 170px; height: 230px;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Kitab açılanda mərkəzdə qalması üçün sağa sürüşdürürük */
+        .book.is-open {
+            transform: translateX(85px) rotateX(5deg);
+        }
+
+        .book-cover, .book-page {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            transform-origin: left center;
+            transform-style: preserve-3d;
+            border-radius: 3px 12px 12px 3px;
+        }
+
+        /* --- KİTABIN CİLDİ (KAPAQ) --- */
+        .book-cover {
+            z-index: 10;
+            transition: transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 10px 15px 30px rgba(0,0,0,0.6); /* Qapalıykən kölgə */
+        }
+
+        .book.is-open .book-cover {
+            transform: rotateY(-165deg);
+            box-shadow: -10px 15px 30px rgba(0,0,0,0.5); /* Açıqkən kölgə yönü dəyişir */
+        }
+
+        .book-cover .front, .book-cover .back {
+            position: absolute; width: 100%; height: 100%;
+            backface-visibility: hidden;
+            border-radius: 3px 12px 12px 3px;
+        }
+
+        /* Qapağın Ön Üzü (Tünd bənövşəyi/qızılı dəri effekti) */
+        .book-cover .front {
+            background: linear-gradient(135deg, #1a052e, #3a0ca3);
+            border: 2px solid #d4af37;
+            border-left: 10px solid #0d0217; /* Kitabın onurğası */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), inset 0 0 5px #d4af37;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+
+        .cover-ornament {
+            color: #d4af37; font-size: 45px; text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+        }
+
+        .cover-title {
+            color: #d4af37; font-size: 18px; font-family: 'Georgia', serif; font-weight: bold;
+            text-align: center; margin-top: 15px; letter-spacing: 1px;
+            padding: 0 15px;
+        }
+
+        /* Qapağın İç Üzü */
+        .book-cover .back {
+            background: #e6dcc3;
+            transform: rotateY(180deg);
+            border-right: 10px solid #0d0217;
+            box-shadow: inset 8px 0 25px rgba(0,0,0,0.4);
+            background-image: radial-gradient(circle, transparent 20%, #d8cdb2 140%);
+        }
+
+        /* --- KİTABIN İÇ SƏHİFƏSİ (KAĞIZ) --- */
+        .book-page {
+            background: #fdf8e2; /* Köhnə kağız rəngi */
+            z-index: 5;
+            /* Səhifə yığını (qalınlıq) effekti */
+            box-shadow: 2px 0 0 #fff, 3px 0 0 #d8cdb2, 4px 0 0 #fff, 5px 0 0 #d8cdb2, 
+                        inset 10px 0 25px rgba(0,0,0,0.15), 15px 15px 25px rgba(0,0,0,0.5);
+            display: flex; align-items: center; justify-content: center;
+            padding: 25px; box-sizing: border-box;
+            border-right: 1px solid #d8cdb2;
+        }
+
+        .page-content {
+            font-family: 'Georgia', serif; font-size: 15px;
+            color: #3e2723; text-align: center; font-style: italic;
+            line-height: 1.6;
+            opacity: 0; transform: scale(0.9);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        /* Kitab tam açılanda yazı yavaşca peyda olur */
+        .book.is-open .page-content {
+            opacity: 1; transform: scale(1);
+            transition-delay: 0.6s; /* Qapaq açılandan sonra yazını göstər */
+        }
+
+        /* --- MOBİL ÜÇÜN DÜZƏLİŞLƏR --- */
         @media (max-width: 768px) {
             .moon { font-size: 55px; } 
             .static-bg-layer { height: 320px; top: -10px; }
             .bottom-section { height: 45%; } 
             .wave { top: -29px; height: 30px; } 
+
+            .book-scene { height: 220px; }
+            .book { width: 140px; height: 190px; }
+            .book.is-open { transform: translateX(70px) rotateX(5deg); }
+            
+            .cover-ornament { font-size: 35px; }
+            .cover-title { font-size: 14px; margin-top: 10px; }
+            .page-content { font-size: 13px; padding: 5px; }
         }
     </style>
 </head>
@@ -95,10 +215,31 @@
         </div>
         
         <div class="content-area">
+            <div class="title-text">Ramazan Günlüyü</div>
+
+            <div class="book-scene">
+                <div class="book" id="diary-book">
+                    
+                    <div class="book-cover">
+                        <div class="front">
+                            <div class="cover-ornament">🌙</div>
+                            <div class="cover-title">Bizim<br>Hekayəmiz</div>
+                        </div>
+                        <div class="back"></div> </div>
+
+                    <div class="book-page">
+                        <div class="page-content" id="diary-text">
+                            </div>
+                    </div>
+
+                </div>
             </div>
+
+        </div>
     </div>
 
     <script>
+        // Səma və Ulduzlar
         const skyMoving = document.getElementById('sky');
         for (let i = 0; i < 180; i++) {
             let star = document.createElement('div');
@@ -111,6 +252,56 @@
             star.style.animationDelay = Math.random() * 2 + 's';
             skyMoving.appendChild(star);
         }
+
+        // --- GÜNDƏLİK MƏNTİQİ ---
+        const book = document.getElementById('diary-book');
+        const textElement = document.getElementById('diary-text');
+        let isOpen = false;
+        let isAnimating = false;
+
+        // BURA ÖZ YAZACAĞIN 30 CÜMLƏNİ (VƏ YA HEKAYƏ HİSSƏLƏRİNİ) ƏLAVƏ EDƏ BİLƏRSƏN
+        const diaryEntries = [
+            "Bu günün duası: Gözlərindəki işıq, qəlbindəki huzur heç vaxt əskik olmasın. ❤️",
+            "Kumsal və Ege kimi, ulduzların altında, eyni səmaya baxaraq iftarımızı gözləmək diləyiylə...",
+            "Valen Akademiyasının dəhlizlərindəki sirr qədər dərinsən mənim üçün. Hər gün yenidən kəşf edirəm səni.",
+            "Ramazanın bərəkəti süfrəmizdən, sevgin isə qəlbimdən heç əskik olmasın.",
+            "Bu gün iftara qədər sənə olan sevgimi düşündüm. İnan, vaxtın necə keçdiyini heç anlamadım.",
+            "Səninlə keçən hər Ramazan, ömrümə yazılmış ən gözəl hekayədir.",
+            "Bir gün Kumsalın Egeyə baxdığı kimi sənə baxa bilmək ümidiylə...",
+            "Sən mənim dualarımın ən gözəl cavabısan. Qəbul olan şükrümsən.",
+            "Hər sahurda səsimin sənə çatdığı, hər iftarda əllərimizin birləşdiyi o günlərin xəyalıyla...",
+            "Bu günlük səhifəsi yalnız ikimizə aiddir. Tıpkı aramızdakı qopmaz bağ kimi.",
+            "Səninlə hər çətinlik, hər həsrət asanlaşır. Sən mənim həyatımdakı ən gözəl möcüzəsən.",
+            "Bu ay boyunca hər günüm sənə dualarla başlayır, səninlə bitir.",
+            "Yazacağım heç bir hekayə, ikimizin hekayəsi qədər mükəmməl ola bilməz.",
+            "Bu gün sadəcə gülümsə. Çünki sən gülümsəyəndə mənim dünyam aydınlanır.",
+            "Səni düşünmək, ən ləzzətli iftar süfrəsindən belə daha şirindir."
+        ];
+
+        book.addEventListener('click', () => {
+            if (isAnimating) return; // Kitab hərəkət edərkən klikləri ləğv et
+            isAnimating = true;
+
+            if (isOpen) {
+                // Kitabı bağla
+                book.classList.remove('is-open');
+                isOpen = false;
+                
+                // Qapaq bağlanandan sonra animasiya kilidini aç
+                setTimeout(() => { isAnimating = false; }, 1200);
+            } else {
+                // Rastgələ cümlə seç (Və ya ardıcıl da edə bilərsən)
+                const randomEntry = diaryEntries[Math.floor(Math.random() * diaryEntries.length)];
+                textElement.innerText = randomEntry;
+
+                // Kitabı aç
+                book.classList.add('is-open');
+                isOpen = true;
+                
+                // Qapaq tam açılandan sonra kilidi aç
+                setTimeout(() => { isAnimating = false; }, 1200);
+            }
+        });
     </script>
 </body>
 </html>
