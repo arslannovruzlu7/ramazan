@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <title>Sənin Üçün</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            /* Tünd mavidən bənövşəyiyə keçid */
+            background: linear-gradient(to bottom, #070720 0%, #4a148c 100%); 
+            overflow: hidden; 
+        }
+
+        /* Yürüyən pilləkən effekti üçün səma konteyneri */
+        .sky-container {
+            position: absolute;
+            width: 100%;
+            height: 200vh; /* Ekrandan 2 dəfə uzun */
+            top: -100vh;
+            animation: scrollSky 20s linear infinite;
+            z-index: 1;
+        }
+
+        /* Hilal (Ay) - İki dənə yerləşdiririk ki, qırılma olmasın */
+        .moon {
+            position: absolute;
+            font-size: 70px;
+            color: #fff;
+            left: 50%;
+            transform: translateX(-50%);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+        .moon-1 { top: 20vh; }
+        .moon-2 { top: 120vh; } /* İkinci ay tam olaraq birinci ilə eyni mövqeyə gələcək şəkildə yerləşir */
+
+        /* Səmanın yuxarıdan aşağı hərəkəti */
+        @keyframes scrollSky {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Yuxarıdan asılan fənərlər */
+        .lanterns {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            z-index: 10;
+        }
+
+        .lantern {
+            font-size: 60px;
+            transform-origin: top center;
+            animation: swing 4s ease-in-out infinite alternate;
+        }
+
+        /* Təbii külək üçün fərqli gecikmələr */
+        .lantern:nth-child(2) { animation-duration: 3.5s; animation-delay: 0.5s; }
+        .lantern:nth-child(3) { animation-duration: 4.2s; animation-delay: 1.2s; }
+
+        @keyframes swing {
+            0% { transform: rotate(-12deg); }
+            100% { transform: rotate(12deg); }
+        }
+
+        /* Parıldayan Ulduzlar */
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 0 0 5px white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="sky-container" id="sky">
+        <div class="moon moon-1">🌙</div>
+        <div class="moon moon-2">🌙</div>
+        </div>
+
+    <div class="lanterns">
+        <div class="lantern">🏮</div>
+        <div class="lantern">🏮</div>
+        <div class="lantern">🏮</div>
+    </div>
+
+    <script>
+        // Səmaya təsadüfi ulduzlar əlavə edirik
+        const sky = document.getElementById('sky');
+        for (let i = 0; i < 70; i++) {
+            let star = document.createElement('div');
+            star.className = 'star';
+            
+            // Təsadüfi ölçü və mövqe
+            let size = Math.random() * 3 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 200 + 'vh'; // Bütün 200vh sahəyə yayırıq
+            star.style.opacity = Math.random();
+            
+            sky.appendChild(star);
+        }
+    </script>
+
+</body>
+</html>
