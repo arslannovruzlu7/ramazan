@@ -20,13 +20,6 @@
         .sky-moving { position: absolute; width: 200vw; height: 200vh; top: -100vh; left: 0; animation: moveDiagonal 45s linear infinite; }
         @keyframes moveDiagonal { 0% { transform: translate(0, 0); } 100% { transform: translate(-100vw, 100vh); } }
         
-        .moon { 
-            position: absolute; font-size: 80px; color: #fff; 
-            text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7; z-index: 2; 
-        }
-        .moon-1 { top: 120vh; left: 60vw; }
-        .moon-2 { top: 20vh; left: 160vw; }
-
         .star {
             position: absolute; border-radius: 50%; pointer-events: none;
             background-color: #ffffff; filter: drop-shadow(0 0 5px #ffd700);
@@ -55,78 +48,105 @@
         }
 
         #instruction-text {
-            color:#d4af37; margin-bottom:15px; font-weight:bold; letter-spacing:3px; font-size:14px;
-            transition: opacity 1s ease;
+            color:#d4af37; margin-bottom:15px; font-weight:bold; letter-spacing:3px; font-size:12px;
+            transition: opacity 1s ease; text-transform: uppercase;
         }
 
         /* --- TƏQVİM QUTUSU --- */
         .calendar-box {
             position: relative;
-            width: 220px; height: 300px;
+            width: 240px; height: 320px;
             margin-top: 10px;
         }
 
-        /* VƏRƏQ (Başlıqla birlikdə) */
         .leaf-wrapper {
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
             display: flex; flex-direction: column;
             cursor: pointer;
             transform-origin: top center;
-            transition: transform 0.3s;
         }
 
-        /* Hər vərəqin öz fərdi başlığı */
+        /* Hər vərəqin başlığı */
         .leaf-header {
-            width: 90%; height: 40px;
+            width: 85%; height: 35px;
             margin: 0 auto;
-            background: linear-gradient(135deg, #1a237e, #0d47a1);
-            border-radius: 8px 8px 0 0;
+            background: linear-gradient(135deg, #0d47a1, #002171);
+            border-radius: 10px 10px 0 0;
             display: flex; justify-content: center; align-items: center;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
             z-index: 2;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         .header-dots {
-            width: 70%; display: flex; justify-content: space-between;
+            width: 60%; display: flex; justify-content: space-between;
         }
         .header-dots span {
-            width: 6px; height: 6px; background: rgba(255,255,255,0.6); border-radius: 50%;
+            width: 5px; height: 5px; background: #d4af37; border-radius: 50%;
+            box-shadow: 0 0 5px #d4af37;
         }
 
-        /* Əsas ağ kağız hissəsi */
+        /* Yarpağın daxili dizaynı */
         .leaf-content {
             flex: 1;
-            background: #1a237e;
-            border-radius: 0 0 10px 10px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            background: #070b34; /* Daha tünd, dərin gecə mavisi */
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             display: flex; flex-direction: column;
-            border: 1px solid #303f9f;
-            margin-top: -5px; /* Başlığa yapışması üçün */
-            z-index: 1;
+            border: 1.5px solid #1a237e;
+            margin-top: -3px;
+            position: relative;
+            overflow: hidden;
         }
 
+        /* Arxa fondakı naxış (Pattern) */
+        .leaf-content::before {
+            content: "";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+        }
+
+        /* Künc ornamentləri */
+        .ornament {
+            position: absolute; width: 40px; height: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+        }
+        .orn-tl { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+        .orn-br { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
         .leaf-top-bar {
-            height: 40px; background: rgba(255, 255, 255, 0.05); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            height: 45px; background: rgba(255, 255, 255, 0.03); 
             display: flex; align-items: center; justify-content: space-between;
-            padding: 0 15px; font-size: 13px; font-weight: bold; color: #fff;
+            padding: 0 15px; font-size: 12px; font-weight: bold; color: #d4af37;
+            letter-spacing: 2px;
         }
 
         .leaf-body {
-            flex: 1; padding: 20px;
-            display: flex; align-items: center; justify-content: center;
+            flex: 1; padding: 25px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: relative;
         }
 
         .leaf-message {
             font-family: 'Dancing Script', cursive;
-            font-size: 21px; color: #ffffff; text-align: center;
-            line-height: 1.4;
+            font-size: 22px; color: #ffffff; text-align: center;
+            line-height: 1.6; z-index: 5;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        /* Aşağıdakı kiçik siluet */
+        .silhouette {
+            position: absolute; bottom: 5px; opacity: 0.15;
+            font-size: 40px; color: #fff; pointer-events: none;
         }
 
         .leaf-footer {
-            height: 30px; border-top: 1px solid rgba(255, 255, 255, 0.05);
+            height: 35px; border-top: 1px solid rgba(255, 255, 255, 0.05);
             display: flex; align-items: center; justify-content: center;
-            font-size: 10px; color: #bbb;
+            font-size: 10px; color: #666; letter-spacing: 1px;
         }
 
         /* DÜŞMƏ ANİMASİYASI */
@@ -137,13 +157,13 @@
 
         @keyframes elegantFall {
             0% { transform: rotateX(0deg); opacity: 1; }
-            15% { transform: rotateX(-40deg) rotateY(10deg); }
-            100% { transform: translateY(800px) rotateZ(60deg) rotateX(120deg); opacity: 0; }
+            20% { transform: rotateX(-45deg) rotateY(15deg) translateY(-10px); }
+            100% { transform: translateY(1000px) rotateZ(80deg) rotateX(150deg); opacity: 0; }
         }
 
         @media (max-width: 768px) {
-            .calendar-box { width: 190px; height: 270px; }
-            .leaf-message { font-size: 18px; }
+            .calendar-box { width: 210px; height: 290px; }
+            .leaf-message { font-size: 19px; }
         }
     </style>
 </head>
@@ -164,7 +184,7 @@
         </div>
         
         <div class="content-area">
-            <div id="instruction-text">TƏQVİMİ ÇEVİRMƏK ÜÇÜN TOXUN</div>
+            <div id="instruction-text">Təqvimi çevirmək üçün toxun</div>
             <div class="calendar-box" id="calendar"></div>
         </div>
     </div>
@@ -208,21 +228,23 @@
                     <div class="header-dots"><span></span><span></span><span></span><span></span></div>
                 </div>
                 <div class="leaf-content">
+                    <div class="ornament orn-tl"></div>
+                    <div class="ornament orn-br"></div>
                     <div class="leaf-top-bar">
                         <span>🌙</span>
                         <span>GÜN ${index + 1}</span>
-                        <span></span>
+                        <span>⭐</span>
                     </div>
                     <div class="leaf-body">
                         <div class="leaf-message">${messages[index]}</div>
+                        <div class="silhouette">🕌</div>
                     </div>
-                    <div class="leaf-footer">© 2026 Ramazan Sevgisi</div>
+                    <div class="leaf-footer">RAMAZAN 2026</div>
                 </div>
             `;
             return wrapper;
         }
 
-        // 30 vərəqi yaradırıq
         for (let i = 0; i < 30; i++) {
             calendar.appendChild(createLeaf(i));
         }
@@ -239,10 +261,9 @@
             topLeaf.classList.add('leaf-fall');
             removedDays++;
 
-            // 30-cu vərəq düşəndə sahə tam boş qalacaq
             if (removedDays === 30) {
                 setTimeout(() => {
-                    calendar.innerHTML = ''; 
+                    calendar.style.display = 'none';
                 }, 2200);
             }
         });
