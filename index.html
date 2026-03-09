@@ -27,6 +27,7 @@
             position: absolute;
             width: 200vw; height: 200vh;
             top: -100vh; left: 0;
+            /* Sol aşağıya ( diaqonal ) hərəkət */
             animation: moveDiagonal 30s linear infinite;
         }
 
@@ -51,27 +52,31 @@
             animation: twinkle 2s ease-in-out infinite alternate;
         }
 
+        /* Ulduz parıltısını kəskinləşdiririk ( adam ağıllı ) */
         @keyframes twinkle {
             0% { 
                 opacity: 0.5; transform: scale(0.9); 
-                box-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+                box-shadow: 0 0 2px rgba(255, 255, 255, 0.3);
             }
             100% { 
                 opacity: 1; transform: scale(1.4); 
-                box-shadow: 0 0 12px rgba(255, 255, 255, 1), 0 0 25px rgba(255, 215, 0, 0.5); 
+                /* Tam parlaq olur, kəskinləşir */
+                box-shadow: 0 0 8px rgba(255, 255, 255, 1), 0 0 15px rgba(255, 215, 0, 0.4); 
             }
         }
 
-        /* --- FƏNƏRLƏR --- */
-        .lanterns-container {
+        /* --- ASILMIŞ ELEMENTLƏR (YELLƏNƏNLƏR) --- */
+        .hanging-assets-zone {
             position: absolute;
-            top: 0; width: 100%;
+            top: 0;
+            width: 100%;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center; /* Mərkəzləşdiririk */
+            align-items: flex-start;
             z-index: 10;
         }
 
-        .lantern-box {
+        .hanging-asset {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -79,25 +84,83 @@
             animation: swing 3s ease-in-out infinite alternate;
         }
 
+        /* Placeholder URL-lərini təyin edirik */
+        :root {
+            --url-star-solid: url("https://raw.githubusercontent.com/istifadeci/ramazan/assets/images/star_gold_solid.png");
+            --url-star-outline: url("https://raw.githubusercontent.com/istifadeci/ramazan/assets/images/star_gold_outline.png");
+            --url-lantern-turquoise-big: url("https://raw.githubusercontent.com/istifadeci/ramazan/assets/images/lantern_turquoise_big.png");
+            --url-lantern-turquoise-small: url("https://raw.githubusercontent.com/istifadeci/ramazan/assets/images/lantern_turquoise_small.png");
+        }
+
+        /* Ulduz stikerləri ( image_3.png-dən qızılı ) */
+        .star-box {
+            width: 30px; /* Stikerin təxmini ölçüsü */
+            height: 30px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center top;
+            position: relative;
+            transform-origin: top center; /* Yellənmə nöqtəsi asılma ipinin CSS before uclarından başlasın */
+        }
+
+        .star-box-solid { background-image: var(--url-star-solid); }
+        .star-box-outline { background-image: var(--url-star-outline); }
+
+        /* Ulduz ipləri */
+        .star-box::before {
+            content: '';
+            width: 1px;
+            background-color: rgba(255, 215, 0, 0.4);
+            display: block;
+            position: absolute;
+            top: -30px; /* İp yuxarıdan asılsın */
+            left: 50%;
+            transform: translateX(-50%);
+            transform-origin: top center; /* Yellənmə ipin yuxarısından başlasın */
+        }
+
+        /* Fənər stikerləri ( image_4.png-dən firuzəyi-qızılı ) */
+        .lantern-box {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center top;
+            position: relative;
+            transform-origin: top center; /* Yellənmə nöqtəsi asılma ipinin CSS before uclarından başlasın */
+        }
+
+        .lantern-turquoise-big-box {
+            width: 120px;
+            height: 180px;
+            background-image: var(--url-lantern-turquoise-big);
+        }
+
+        .lantern-turquoise-small-box {
+            width: 70px;
+            height: 110px;
+            background-image: var(--url-lantern-turquoise-small);
+        }
+
+        /* Fənər ipləri */
         .lantern-box::before {
             content: '';
             width: 2px;
             background-color: rgba(255, 215, 0, 0.5);
             display: block;
+            position: absolute;
+            top: -50px; /* Fənər yuxarıdan asılsın */
+            left: 50%;
+            transform: translateX(-50%);
+            transform-origin: top center; /* Yellənmə ipin yuxarısından başlasın */
         }
 
-        .lantern { font-size: 50px; margin-top: -5px; }
-
-        .lantern-box:nth-child(1) { animation-duration: 3.2s; }
-        .lantern-box:nth-child(1)::before { height: 40px; }
-        .lantern-box:nth-child(2) { animation-duration: 4.1s; animation-delay: 0.5s; }
-        .lantern-box:nth-child(2)::before { height: 70px; }
-        .lantern-box:nth-child(3) { animation-duration: 3.8s; animation-delay: 1.2s; }
-        .lantern-box:nth-child(3)::before { height: 30px; }
-        .lantern-box:nth-child(4) { animation-duration: 4.5s; animation-delay: 0.2s; }
-        .lantern-box:nth-child(4)::before { height: 60px; }
-        .lantern-box:nth-child(5) { animation-duration: 3.5s; animation-delay: 0.8s; }
-        .lantern-box:nth-child(5)::before { height: 45px; }
+        /* Yellənmə gecikmələri */
+        .hanging-asset:nth-child(1) { animation-duration: 3.2s; animation-delay: 0.1s; } /* Ulduz 1 */
+        .hanging-asset:nth-child(2) { animation-duration: 4.1s; animation-delay: 0.5s; } /* Ulduz 2 */
+        .hanging-asset:nth-child(3) { animation-duration: 3.8s; animation-delay: 1.2s; } /* Ulduz 3 */
+        .hanging-asset:nth-child(4) { animation-duration: 4.5s; animation-delay: 0.2s; } /* Ulduz 4 */
+        .hanging-asset:nth-child(5) { animation-duration: 3.5s; animation-delay: 0.8s; } /* Fənər 1 */
+        .hanging-asset:nth-child(6) { animation-duration: 4.2s; animation-delay: 1.5s; } /* Fənər 2 (mərkəz) */
+        .hanging-asset:nth-child(7) { animation-duration: 3.9s; animation-delay: 2.1s; } /* Fənər 3 */
 
         @keyframes swing {
             0% { transform: rotate(-10deg); }
@@ -120,11 +183,11 @@
             line-height: 0;
         }
 
-        /* Qırılma xəttinin ləğvi üçün hündürlüyü artırıb bir az aşağı sürüşdürdük */
+        /* Bənövşəyi dalğada translasiyanı artırırıq */
         .wave svg {
             display: block; width: 100%; 
-            height: calc(100% + 2px); 
-            transform: translateY(1px);
+            height: calc(100% + 4px); /* Hündürlüyü daha çox artırırıq */
+            transform: translateY(2px); /* Translasiyanı artırırıq */
         }
 
         .content-area {
@@ -141,18 +204,19 @@
         /* --- MOBİL ÜÇÜN XÜSUSİ DÜZƏLİŞLƏR (RESPONSIVE) --- */
         @media (max-width: 768px) {
             .moon { font-size: 50px; } 
-            .lantern { font-size: 35px; } 
-            .lantern-box::before { width: 1.5px; } 
+
+            /* Stikerləri mobilə uyğunlaşdırırıq */
+            .lantern-turquoise-big-box { width: 90px; height: 135px; }
+            .lantern-turquoise-small-box { width: 50px; height: 80px; }
+            .star-box { width: 25px; height: 25px; }
             
-            .lantern-box:nth-child(1)::before { height: 25px; }
-            .lantern-box:nth-child(2)::before { height: 45px; }
-            .lantern-box:nth-child(3)::before { height: 20px; }
-            .lantern-box:nth-child(4)::before { height: 40px; }
-            .lantern-box:nth-child(5)::before { height: 30px; }
+            /* İplərin uzunluğunu da kiçildirərik */
+            .lantern-box::before { top: -35px; height: 35px; }
+            .star-box::before { top: -20px; height: 20px; }
 
             .bottom-section { height: 45%; } 
             .wave { top: -29px; height: 30px; } 
-            .wave svg { height: calc(100% + 2px); transform: translateY(1px); }
+            .wave svg { height: calc(100% + 4px); transform: translateY(2px); }
         }
     </style>
 </head>
@@ -165,12 +229,15 @@
         </div>
     </div>
 
-    <div class="lanterns-container">
-        <div class="lantern-box"><div class="lantern">🏮</div></div>
-        <div class="lantern-box"><div class="lantern">🏮</div></div>
-        <div class="lantern-box"><div class="lantern">🏮</div></div>
-        <div class="lantern-box"><div class="lantern">🏮</div></div>
-        <div class="lantern-box"><div class="lantern">🏮</div></div>
+    <div class="hanging-assets-zone">
+        <div class="hanging-asset star-box star-box-1 star-box-solid"></div>
+        <div class="hanging-asset star-box star-box-2 star-box-outline"></div>
+        <div class="hanging-asset star-box star-box-3 star-box-solid"></div>
+        <div class="hanging-asset star-box star-box-4 star-box-outline"></div>
+
+        <div class="hanging-asset lantern-box lantern-turquoise-small-box"></div>
+        <div class="hanging-asset lantern-box lantern-turquoise-big-box"></div>
+        <div class="hanging-asset lantern-box lantern-turquoise-small-box"></div>
     </div>
 
     <div class="bottom-section">
