@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ramazan Gündəliyi</title>
+    <title>Sehrli Ramazan Təqvimi</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Pacifico&display=swap');
+
         body, html {
             margin: 0; padding: 0;
             height: 100%; overflow: hidden;
             background-color: #070720; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             user-select: none;
         }
 
@@ -18,183 +20,113 @@
         .sky-moving { position: absolute; width: 200vw; height: 200vh; top: -100vh; left: 0; animation: moveDiagonal 45s linear infinite; }
         @keyframes moveDiagonal { 0% { transform: translate(0, 0); } 100% { transform: translate(-100vw, 100vh); } }
         
-        /* AY */
         .moon { 
             position: absolute; font-size: 80px; color: #fff; 
-            text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7; 
-            filter: none; z-index: 2; 
+            text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7; z-index: 2; 
         }
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; }
 
-        /* ULDUZLAR */
         .star {
             position: absolute; border-radius: 50%; pointer-events: none;
             background-color: #ffffff; filter: drop-shadow(0 0 5px #ffd700);
             animation: pulseStar 1.5s ease-in-out infinite alternate;
         }
-        .star::before, .star::after {
-            content: ''; position: absolute;
-            background: linear-gradient(180deg, rgba(255, 236, 179, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 236, 179, 0) 100%);
-            pointer-events: none;
-        }
-        .star.star-cross-small { width: 3px; height: 3px; }
-        .star.star-cross-small::before, .star.star-cross-small::after { top: -150%; left: 50%; width: 1px; height: 400%; }
-        .star.star-cross-small::before { transform: translateX(-50%) rotate(45deg); }
-        .star.star-cross-small::after { transform: translateX(-50%) rotate(-45deg); }
-        .star.star-cross-large { width: 5px; height: 5px; filter: drop-shadow(0 0 8px #ffd700) drop-shadow(0 0 15px #ffffff); }
-        .star.star-cross-large::before, .star.star-cross-large::after { top: -200%; left: 50%; width: 1.5px; height: 500%; }
-        .star.star-cross-large::before { transform: translateX(-50%) rotate(45deg); }
-        .star.star-cross-large::after { transform: translateX(-50%) rotate(-45deg); }
-        .star.star-dot { width: 2.5px; height: 2.5px; filter: drop-shadow(0 0 4px #ffd700); animation: none; }
         @keyframes pulseStar { 0% { opacity: 0.7; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1.1); } }
 
-        /* --- TƏRPƏNMƏZ ARXA FON --- */
+        /* --- ARXA FON --- */
         .static-bg-layer {
-            position: absolute; top: -20px; left: 0; width: 100%; 
-            height: 350px; 
+            position: absolute; top: -20px; left: 0; width: 100%; height: 350px; 
             background-image: url('arxafon.png'); background-repeat: repeat-x; 
             background-size: auto 100%; z-index: 5; pointer-events: none;
         }
 
-        /* --- AŞAĞI BƏNÖVŞƏYİ HİSSƏ --- */
+        /* --- AŞAĞI SAHƏ --- */
         .bottom-section {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 42%;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 45%;
             background-color: #4a148c; z-index: 15;
         }
         .wave { position: absolute; top: -49px; left: 0; width: 100%; height: 50px; }
-        .wave svg { display: block; width: 100%; height: calc(100% + 4px); transform: translateY(2px); }
+        .wave svg { display: block; width: 100%; height: 52px; transform: translateY(2px); }
 
         .content-area {
-            position: relative; width: 100%; height: 100%;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
+            perspective: 1000px;
         }
 
-        .title-text {
-            color: #ffd700; font-size: 16px; margin-bottom: 15px;
-            letter-spacing: 3px; text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            font-weight: bold;
-        }
-
-        /* ========================================= */
-        /* MÜKƏMMƏL 3D GÜNDƏLİK DİZAYNI (PREMIUM) */
-        /* ========================================= */
-        
-        .book-scene {
-            perspective: 1500px; /* 3D Dərinlik */
-            width: 100%; height: 240px;
-            display: flex; justify-content: center; align-items: center;
-        }
-
-        .book {
+        /* --- 3D TEQVIM DIZAYNI --- */
+        .calendar-container {
             position: relative;
-            width: 170px; height: 230px;
-            transform-style: preserve-3d;
-            transition: transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            width: 180px; height: 220px;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Kitab açılanda mərkəzdə qalması üçün sağa sürüşdürürük */
-        .book.is-open {
-            transform: translateX(85px) rotateX(5deg);
+        /* Təqvimin üst qırmızı hissəsi (Dəmirli başlıq) */
+        .calendar-header {
+            position: absolute; top: -15px; left: 0;
+            width: 100%; height: 40px;
+            background: linear-gradient(to bottom, #b71c1c, #880e4f);
+            border-radius: 8px 8px 0 0;
+            z-index: 20;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            display: flex; justify-content: space-around; align-items: center;
+        }
+        .calendar-header::before, .calendar-header::after {
+            content: ''; width: 10px; height: 10px; background: #333; border-radius: 50%;
         }
 
-        .book-cover, .book-page {
-            position: absolute; top: 0; left: 0;
+        /* Təqvimin vərəqləri */
+        .leaf {
+            position: absolute; top: 25px; left: 0;
             width: 100%; height: 100%;
-            transform-origin: left center;
-            transform-style: preserve-3d;
-            border-radius: 3px 12px 12px 3px;
+            background: #fff;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            display: flex; flex-direction: column;
+            padding: 15px; box-sizing: border-box;
+            transform-origin: top center;
+            transition: transform 0.3s;
         }
 
-        /* --- KİTABIN CİLDİ (KAPAQ) --- */
-        .book-cover {
-            z-index: 10;
-            transition: transform 1.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 10px 15px 30px rgba(0,0,0,0.6); /* Qapalıykən kölgə */
-        }
-
-        .book.is-open .book-cover {
-            transform: rotateY(-165deg);
-            box-shadow: -10px 15px 30px rgba(0,0,0,0.5); /* Açıqkən kölgə yönü dəyişir */
-        }
-
-        .book-cover .front, .book-cover .back {
-            position: absolute; width: 100%; height: 100%;
-            backface-visibility: hidden;
-            border-radius: 3px 12px 12px 3px;
-        }
-
-        /* Qapağın Ön Üzü (Tünd bənövşəyi/qızılı dəri effekti) */
-        .book-cover .front {
-            background: linear-gradient(135deg, #1a052e, #3a0ca3);
-            border: 2px solid #d4af37;
-            border-left: 10px solid #0d0217; /* Kitabın onurğası */
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), inset 0 0 5px #d4af37;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-        }
-
-        .cover-ornament {
-            color: #d4af37; font-size: 45px; text-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
-        }
-
-        .cover-title {
-            color: #d4af37; font-size: 18px; font-family: 'Georgia', serif; font-weight: bold;
-            text-align: center; margin-top: 15px; letter-spacing: 1px;
-            padding: 0 15px;
-        }
-
-        /* Qapağın İç Üzü */
-        .book-cover .back {
-            background: #e6dcc3;
-            transform: rotateY(180deg);
-            border-right: 10px solid #0d0217;
-            box-shadow: inset 8px 0 25px rgba(0,0,0,0.4);
-            background-image: radial-gradient(circle, transparent 20%, #d8cdb2 140%);
-        }
-
-        /* --- KİTABIN İÇ SƏHİFƏSİ (KAĞIZ) --- */
-        .book-page {
-            background: #fdf8e2; /* Köhnə kağız rəngi */
-            z-index: 5;
-            /* Səhifə yığını (qalınlıq) effekti */
-            box-shadow: 2px 0 0 #fff, 3px 0 0 #d8cdb2, 4px 0 0 #fff, 5px 0 0 #d8cdb2, 
-                        inset 10px 0 25px rgba(0,0,0,0.15), 15px 15px 25px rgba(0,0,0,0.5);
+        /* Romantik Şrift və Yazı mərkəzi */
+        .leaf-content {
+            flex: 1;
             display: flex; align-items: center; justify-content: center;
-            padding: 25px; box-sizing: border-box;
-            border-right: 1px solid #d8cdb2;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 20px; color: #333;
+            line-height: 1.4;
         }
 
-        .page-content {
-            font-family: 'Georgia', serif; font-size: 15px;
-            color: #3e2723; text-align: center; font-style: italic;
-            line-height: 1.6;
-            opacity: 0; transform: scale(0.9);
-            transition: opacity 0.8s ease, transform 0.8s ease;
+        .leaf-date {
+            font-family: 'Pacifico', cursive;
+            font-size: 14px; color: #b71c1c;
+            border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px;
         }
 
-        /* Kitab tam açılanda yazı yavaşca peyda olur */
-        .book.is-open .page-content {
-            opacity: 1; transform: scale(1);
-            transition-delay: 0.6s; /* Qapaq açılandan sonra yazını göstər */
+        /* QOPMA ANIMASIYASI (SuZulme) */
+        .fall-down {
+            animation: leafFall 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            pointer-events: none;
+            z-index: 25;
         }
 
-        /* --- MOBİL ÜÇÜN DÜZƏLİŞLƏR --- */
+        @keyframes leafFall {
+            0% { transform: rotateX(0deg) translateY(0); opacity: 1; }
+            20% { transform: rotateX(-20deg) rotateZ(5deg); }
+            40% { transform: rotateX(-10deg) rotateZ(-10deg) translateX(20px); }
+            60% { transform: rotateX(-15deg) rotateZ(10deg) translateX(-30px) translateY(150px); opacity: 0.8; }
+            100% { transform: translateY(600px) rotateZ(30deg) rotateX(90deg); opacity: 0; }
+        }
+
+        /* MOBIL */
         @media (max-width: 768px) {
             .moon { font-size: 55px; } 
             .static-bg-layer { height: 320px; top: -10px; }
-            .bottom-section { height: 45%; } 
-            .wave { top: -29px; height: 30px; } 
-
-            .book-scene { height: 220px; }
-            .book { width: 140px; height: 190px; }
-            .book.is-open { transform: translateX(70px) rotateX(5deg); }
-            
-            .cover-ornament { font-size: 35px; }
-            .cover-title { font-size: 14px; margin-top: 10px; }
-            .page-content { font-size: 13px; padding: 5px; }
+            .bottom-section { height: 50%; } 
+            .calendar-container { width: 160px; height: 200px; }
+            .leaf-content { font-size: 17px; }
         }
     </style>
 </head>
@@ -215,37 +147,20 @@
         </div>
         
         <div class="content-area">
-            <div class="title-text">Ramazan Günlüyü</div>
-
-            <div class="book-scene">
-                <div class="book" id="diary-book">
-                    
-                    <div class="book-cover">
-                        <div class="front">
-                            <div class="cover-ornament">🌙</div>
-                            <div class="cover-title">Bizim<br>Hekayəmiz</div>
-                        </div>
-                        <div class="back"></div> </div>
-
-                    <div class="book-page">
-                        <div class="page-content" id="diary-text">
-                            </div>
-                    </div>
-
+            <div style="color:#ffd700; margin-bottom:10px; font-weight:bold; letter-spacing:2px;">RAMAZAN TƏQVİMİ</div>
+            
+            <div class="calendar-container" id="calendar">
+                <div class="calendar-header"></div>
                 </div>
-            </div>
-
         </div>
     </div>
 
     <script>
-        // Səma və Ulduzlar
+        // Səma və ulduzlar
         const skyMoving = document.getElementById('sky');
-        for (let i = 0; i < 180; i++) {
+        for (let i = 0; i < 150; i++) {
             let star = document.createElement('div');
-            const starType = Math.floor(Math.random() * 3);
-            let typeClass = (starType === 0) ? 'star-dot' : (starType === 1 ? 'star-cross-small' : 'star-cross-large');
-            star.className = `star ${typeClass}`;
+            star.className = 'star';
             star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
             star.style.left = Math.random() * 100 + '%';
             star.style.top = Math.random() * 100 + '%'; 
@@ -253,54 +168,66 @@
             skyMoving.appendChild(star);
         }
 
-        // --- GÜNDƏLİK MƏNTİQİ ---
-        const book = document.getElementById('diary-book');
-        const textElement = document.getElementById('diary-text');
-        let isOpen = false;
-        let isAnimating = false;
-
-        // BURA ÖZ YAZACAĞIN 30 CÜMLƏNİ (VƏ YA HEKAYƏ HİSSƏLƏRİNİ) ƏLAVƏ EDƏ BİLƏRSƏN
-        const diaryEntries = [
-            "Bu günün duası: Gözlərindəki işıq, qəlbindəki huzur heç vaxt əskik olmasın. ❤️",
-            "Kumsal və Ege kimi, ulduzların altında, eyni səmaya baxaraq iftarımızı gözləmək diləyiylə...",
-            "Valen Akademiyasının dəhlizlərindəki sirr qədər dərinsən mənim üçün. Hər gün yenidən kəşf edirəm səni.",
-            "Ramazanın bərəkəti süfrəmizdən, sevgin isə qəlbimdən heç əskik olmasın.",
-            "Bu gün iftara qədər sənə olan sevgimi düşündüm. İnan, vaxtın necə keçdiyini heç anlamadım.",
-            "Səninlə keçən hər Ramazan, ömrümə yazılmış ən gözəl hekayədir.",
-            "Bir gün Kumsalın Egeyə baxdığı kimi sənə baxa bilmək ümidiylə...",
-            "Sən mənim dualarımın ən gözəl cavabısan. Qəbul olan şükrümsən.",
-            "Hər sahurda səsimin sənə çatdığı, hər iftarda əllərimizin birləşdiyi o günlərin xəyalıyla...",
-            "Bu günlük səhifəsi yalnız ikimizə aiddir. Tıpkı aramızdakı qopmaz bağ kimi.",
-            "Səninlə hər çətinlik, hər həsrət asanlaşır. Sən mənim həyatımdakı ən gözəl möcüzəsən.",
-            "Bu ay boyunca hər günüm sənə dualarla başlayır, səninlə bitir.",
-            "Yazacağım heç bir hekayə, ikimizin hekayəsi qədər mükəmməl ola bilməz.",
-            "Bu gün sadəcə gülümsə. Çünki sən gülümsəyəndə mənim dünyam aydınlanır.",
-            "Səni düşünmək, ən ləzzətli iftar süfrəsindən belə daha şirindir."
+        // --- TEQVIM MENTIQI ---
+        const calendar = document.getElementById('calendar');
+        
+        // Bura 30 dənə romantik mesajını yaza bilərsən
+        const messages = [
+            "Səninlə hər iftar bir bayramdır. ❤️",
+            "Gözlərindəki nur ulduzlardan daha parlaqdır. ✨",
+            "Sən mənim ən gözəl duamsan. 🤲",
+            "Bu ay qəlbinə hüzur, ömrünə mən gətirsin.",
+            "Sənin gülüşün mənim dünyamı işıqlandırır. 🌸",
+            "Yaxşı ki, varsan, yaxşı ki, mənimləsən.",
+            "Dualarımda həmişə adın var, əzizim.",
+            "Ramazanın bərəkəti sevgimizə dolsun. 🌙",
+            "Sən mənim həyatımdakı ən şirin təsadüfsən. 🥰",
+            "Səni ulduzlar qədər çox sevirəm! ⭐",
+            "Hər sahurda səni düşünmək ən gözəl adətimdir.",
+            "Göyüzü şahid olsun ki, sən mənim hər şeyimsən.",
+            "Bu vərəq sənin üçün ən səmimi gülüşümdür.",
+            "Mənim Ramazanım sənin gəlişinlə başladı.",
+            "Ürəyin həmişə sevgiylə döyünsün. ❤️"
+            // Davamını bura əlavə edə bilərsən...
         ];
 
-        book.addEventListener('click', () => {
-            if (isAnimating) return; // Kitab hərəkət edərkən klikləri ləğv et
-            isAnimating = true;
+        let currentIndex = 0;
 
-            if (isOpen) {
-                // Kitabı bağla
-                book.classList.remove('is-open');
-                isOpen = false;
-                
-                // Qapaq bağlanandan sonra animasiya kilidini aç
-                setTimeout(() => { isAnimating = false; }, 1200);
-            } else {
-                // Rastgələ cümlə seç (Və ya ardıcıl da edə bilərsən)
-                const randomEntry = diaryEntries[Math.floor(Math.random() * diaryEntries.length)];
-                textElement.innerText = randomEntry;
+        function createLeaf(index) {
+            const leaf = document.createElement('div');
+            leaf.className = 'leaf';
+            leaf.style.zIndex = 20 - index; // Arxa vərəqlər daha aşağıda olsun
+            
+            leaf.innerHTML = `
+                <div class="leaf-date">Gün ${index + 1}</div>
+                <div class="leaf-content">${messages[index % messages.length]}</div>
+            `;
+            return leaf;
+        }
 
-                // Kitabı aç
-                book.classList.add('is-open');
-                isOpen = true;
+        // İlkin olaraq 2 vərəq yaradaq (biri üstdə, biri altdan görünsün)
+        calendar.appendChild(createLeaf(currentIndex + 1));
+        const topLeaf = createLeaf(currentIndex);
+        calendar.appendChild(topLeaf);
+
+        calendar.addEventListener('click', () => {
+            const activeLeaf = calendar.lastElementChild;
+            if (activeLeaf.classList.contains('fall-down')) return;
+
+            // Qopma effektini başlat
+            activeLeaf.classList.add('fall-down');
+            
+            // 2.5 saniyə sonra vərəqi sil və altdan yenisini hazırla
+            setTimeout(() => {
+                activeLeaf.remove();
+                currentIndex++;
                 
-                // Qapaq tam açılandan sonra kilidi aç
-                setTimeout(() => { isAnimating = false; }, 1200);
-            }
+                // Həmişə altdan 1 ehtiyat vərəq yaradaq ki, boşluq görünməsin
+                const newHiddenLeaf = createLeaf(currentIndex + 1);
+                newHiddenLeaf.style.opacity = "0";
+                calendar.prepend(newHiddenLeaf);
+                setTimeout(() => newHiddenLeaf.style.opacity = "1", 100);
+            }, 2500);
         });
     </script>
 </body>
