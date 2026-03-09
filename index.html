@@ -18,6 +18,7 @@
         .sky-moving { position: absolute; width: 200vw; height: 200vh; top: -100vh; left: 0; animation: moveDiagonal 45s linear infinite; }
         @keyframes moveDiagonal { 0% { transform: translate(0, 0); } 100% { transform: translate(-100vw, 100vh); } }
         
+        /* AY */
         .moon { 
             position: absolute; font-size: 80px; color: #fff; 
             text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7; 
@@ -26,6 +27,7 @@
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; }
 
+        /* ULDUZLAR - Sarımtıl parıltılı */
         .star {
             position: absolute; border-radius: 50%; pointer-events: none;
             background-color: #ffffff; filter: drop-shadow(0 0 5px #ffd700);
@@ -56,6 +58,8 @@
         }
         .hanging-zone { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
         .hanging-img { position: absolute; transform-origin: top center; animation: swing ease-in-out infinite alternate; height: auto; will-change: transform; backface-visibility: hidden; transform: translateZ(0); }
+        
+        /* Ölçüləri böyük saxladıq */
         .img-l1 { left: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.5s; }
         .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; animation-delay: 0.5s; }
         .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; animation-delay: 1.2s; }
@@ -74,114 +78,24 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;
         }
 
-        .title-text {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 16px; margin-bottom: 20px;
-            letter-spacing: 2px; text-transform: uppercase;
-        }
-
-        /* --- FAL KURABİYƏSİ DİZAYNI (BÖYÜDÜLDÜ) --- */
-        .cookie-wrapper {
-            position: relative; 
-            width: 220px; height: 180px; /* Əvvəl 180x160 idi, böyütdüm */
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Kurabiyənin sağ və sol yarıları */
-        .cookie-half {
-            position: absolute; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-image: url('kurabiye.png'); 
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .cookie-left {
-            clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
-            transform-origin: bottom left;
-            z-index: 2; 
-        }
-        .cookie-right {
-            clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
-            transform-origin: bottom right;
-            z-index: 2; 
-        }
-
-        /* Çatlama (Titrəmə) Animasiyaları */
-        .cracking .cookie-left { animation: crackLeft 0.4s ease-in-out; }
-        .cracking .cookie-right { animation: crackRight 0.4s ease-in-out; }
-
-        @keyframes crackLeft {
-            0%, 100% { transform: translateX(0) rotate(0); }
-            25% { transform: translateX(-4px) rotate(-2deg); }
-            50% { transform: translateX(2px) rotate(1deg); }
-            75% { transform: translateX(-4px) rotate(-2deg); }
-        }
-        @keyframes crackRight {
-            0%, 100% { transform: translateX(0) rotate(0); }
-            25% { transform: translateX(4px) rotate(2deg); }
-            50% { transform: translateX(-2px) rotate(-1deg); }
-            75% { transform: translateX(4px) rotate(2deg); }
-        }
-
-        /* İçindən çıxan fal kağızı (AĞ RƏNG VƏ ÖN PLAN) */
-        .fortune-paper {
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 280px; min-height: 70px; /* Kağız da böyüdü */
-            background-color: #ffffff; /* Tamamilə ağ kağız */
-            color: #222222; /* Tünd oxunaqlı yazı */
-            border: 1px dashed #d4af37;
-            box-shadow: 0px 10px 25px rgba(0,0,0,0.5);
-            border-radius: 5px;
-            padding: 15px 25px;
-            box-sizing: border-box;
-            display: flex; align-items: center; justify-content: center;
-            text-align: center;
-            font-family: 'Georgia', serif; font-size: 17px; font-weight: bold;
-            
-            /* Başlanğıcda gizli və kiçikdir */
-            transform: translate(-50%, -50%) scale(0.5);
-            opacity: 0;
-            z-index: 10; /* ƏN ÖN PLAN - Kurabiyə yarımçıqlarının qabağında duracaq */
-            transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        /* Tıkladıqdan sonra (Açılmış hal) */
-        .cookie-wrapper.opened .cookie-left {
-            /* Sola doğru xeyli uzaqlaşır */
-            transform: translateX(-110px) rotate(-25deg);
-        }
-        .cookie-wrapper.opened .cookie-right {
-            /* Sağa doğru xeyli uzaqlaşır */
-            transform: translateX(110px) rotate(25deg);
-        }
-        .cookie-wrapper.opened .fortune-paper {
-            /* Düz ortada dayanır və böyüyür */
-            transform: translate(-50%, -50%) scale(1); 
-            opacity: 1;
-        }
-
-        /* --- MOBİL ÜÇÜN DÜZƏLİŞLƏR --- */
+        /* --- MOBİL ÜÇÜN --- */
         @media (max-width: 768px) {
             .moon { font-size: 55px; } 
-            .static-bg-layer { height: 220px; top: -15px; }
+            
+            /* Mobildə arxa fon xeyli böyüdüldü (YENİLƏNDİ) */
+            .static-bg-layer { 
+                height: 320px; /* Was 220px */
+                top: -10px;    /* top mövqeyini də tənzimlədik */
+            }
+
+            /* Yellənən fənərlər mobildə eynilə qorunur */
             .img-l1 { left: -5%; top: -15px; width: 45%; max-width: 180px; }
             .img-l2 { left: 15%; top: -25px; width: 35%; max-width: 130px; }
             .img-r1 { right: -5%; top: -15px; width: 45%; max-width: 180px; }
             .img-r2 { right: 15%; top: -25px; width: 35%; max-width: 130px; }
+            
             .bottom-section { height: 45%; } 
             .wave { top: -29px; height: 30px; } 
-            
-            /* Mobildə də kurabiyə əvvəlkindən böyükdür */
-            .cookie-wrapper { width: 180px; height: 150px; }
-            .fortune-paper { width: 240px; font-size: 15px; padding: 12px 15px; }
-            
-            .cookie-wrapper.opened .cookie-left { transform: translateX(-80px) rotate(-20deg); }
-            .cookie-wrapper.opened .cookie-right { transform: translateX(80px) rotate(20deg); }
         }
     </style>
 </head>
@@ -209,22 +123,11 @@
         </div>
         
         <div class="content-area">
-            <div class="title-text">Günün Falı 🥠</div>
-
-            <div class="cookie-wrapper" id="cookie-btn">
-                
-                <div class="cookie-half cookie-left"></div>
-                <div class="cookie-half cookie-right"></div>
-
-                <div class="fortune-paper" id="fortune-text">
-                    Bura yazılar gələcək...
-                </div>
             </div>
-
-        </div>
     </div>
 
     <script>
+        // Səma və Ulduzlar eynilə qorunur
         const skyMoving = document.getElementById('sky');
         for (let i = 0; i < 180; i++) {
             let star = document.createElement('div');
@@ -238,66 +141,8 @@
             star.style.animationDelay = Math.random() * 2 + 's';
             skyMoving.appendChild(star);
         }
-
-        const cookieBtn = document.getElementById('cookie-btn');
-        const fortuneText = document.getElementById('fortune-text');
-        let isOpened = false;
-        let isAnimating = false;
-
-        const messages = [
-            "Səninlə hər iftar bir bayramdır. ❤️",
-            "Gözlərindəki işıq heç vaxt sönməsin. ✨",
-            "Sən mənim bu həyatda ən gözəl duamsan. 🤲",
-            "Ramazanın bərəkəti sevgimizə dolsun. 🌙",
-            "Hər sahurda ağlımda, hər iftarda qəlbimdəsən.",
-            "Səninlə keçən hər an mənim üçün bir möcüzədir. 🌸",
-            "Bu il bütün gözəl arzuların çin olsun, mələyim.",
-            "Dünyanın ən şirin təsadüfüsən. 🥰",
-            "Gecən xeyrə qalsın, mənim ulduzum. ⭐",
-            "Sənin gülüşün mənim dünyamı işıqlandırır.",
-            "Hər dua etdiyimdə adın dilimdən düşmür. 🙏",
-            "Birlikdə neçə-neçə gözəl Ramazanlara... 🎉",
-            "Sən mənim həyatıma göndərilmiş ən gözəl hədiyyəsən. 🎁",
-            "Qəlbinin gözəlliyi üzünə vurub. 💖",
-            "Səninlə hər çətinlik asanlaşır.",
-            "Səsimin çatdığı yerdə sən varsan, dualarımda sən.",
-            "Sevgi səninlə məna qazanır. 🌹",
-            "Hər nəfəsimdə sənə olan sevgim daha da böyüyür.",
-            "Səninlə olmaq, cənnətdən bir kölgədir. 🌿",
-            "Səhərlərim sənin adınla açılır, gecələrim səninlə bağlanır.",
-            "Allah bizi heç vaxt ayırmasın. 🤲",
-            "Sənin sevgin mənim ən böyük gücümdür.",
-            "Sən mənim həyatımın ən gözəl 'amin'isən.",
-            "Gözlərinə baxanda bütün dünyanı unuduram.",
-            "Hər zaman üzün gülsün, sən buna layiqsən. 🌟"
-        ];
-
-        cookieBtn.addEventListener('click', () => {
-            if(isAnimating) return; // Animasiya gedərkən 2-ci dəfə klikləmənin qarşısını alırıq
-
-            if(isOpened) {
-                isAnimating = true;
-                cookieBtn.classList.remove('opened');
-                isOpened = false;
-                setTimeout(() => { isAnimating = false; }, 600);
-            } else {
-                isAnimating = true;
-                cookieBtn.classList.add('cracking');
-                
-                // 400ms çatlama effekti davam edir, sonra açılır
-                setTimeout(() => {
-                    cookieBtn.classList.remove('cracking');
-                    
-                    const randomMsg = messages[Math.floor(Math.random() * messages.length)];
-                    fortuneText.innerText = randomMsg;
-                    
-                    cookieBtn.classList.add('opened');
-                    isOpened = true;
-                    
-                    setTimeout(() => { isAnimating = false; }, 600);
-                }, 400); 
-            }
-        });
+        
+        // Klikləmə məntiqləri buradan silindi
     </script>
 </body>
 </html>
