@@ -51,7 +51,6 @@
             border-radius: 50%;
             pointer-events: none;
             background-color: white;
-            /* Ağ və sarımtıl parıltı yayırıq */
             box-shadow: 0 0 8px rgba(255, 255, 255, 1), 
                         0 0 15px rgba(255, 215, 0, 0.6);
             animation: pulseStar 1.5s ease-in-out infinite alternate;
@@ -60,7 +59,6 @@
         .star::before, .star::after {
             content: '';
             position: absolute;
-            /* Ortası ağ, kənarları qızılı-sarı və şəffafa gedən təmiz rəng keçidi */
             background: linear-gradient(180deg, rgba(255,215,0,0) 0%, rgba(255,255,255,1) 50%, rgba(255,215,0,0) 100%);
             pointer-events: none;
         }
@@ -93,17 +91,17 @@
             100% { opacity: 1; transform: scale(1.15); }
         }
 
-        /* --- SABİT ARXA FON (YENİ ŞƏKİL) --- */
+        /* --- SABİT ARXA FON --- */
         .static-bg-layer {
             position: absolute;
-            top: -15px; /* Yuxarıdan kəsikləri gizlədirik */
+            top: -15px; 
             left: 0;
             width: 100%;
-            height: 250px; /* Hündürlük */
-            background-image: url('arxafon.png'); /* Yeni göndərdiyin şəkil */
-            background-repeat: repeat-x; /* Yan-yana uzadaraq bütün eni doldurur */
-            background-size: auto 100%; /* Hündürlüyə uyğunlaşıb yan-yana gedir */
-            z-index: 5; /* Yellənən şəkillərdən (10) geridə, səmadan (1) öndə */
+            height: 250px; 
+            background-image: url('arxafon.png'); 
+            background-repeat: repeat-x; 
+            background-size: auto 100%; 
+            z-index: 5; 
             pointer-events: none;
         }
 
@@ -112,7 +110,7 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            z-index: 10; /* Arxa fondan daha öndə */
+            z-index: 10; 
             pointer-events: none;
         }
 
@@ -121,16 +119,27 @@
             transform-origin: top center;
             animation: swing ease-in-out infinite alternate;
             height: auto;
+            
+            /* QIRILMALARI LƏĞV EDƏN GPU SÜRƏTLƏNDİRMƏSİ (YAĞ KİMİ) */
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+            /* Şəkillərin kənarlarını yumşaldır */
+            image-rendering: -webkit-optimize-contrast; 
         }
 
-        .img-l1 { left: 2%; top: -25px; width: 22%; max-width: 150px; animation-duration: 4.5s; }
-        .img-l2 { left: 16%; top: -35px; width: 15%; max-width: 100px; animation-duration: 5.1s; animation-delay: 0.5s; }
-        .img-r1 { right: 2%; top: -25px; width: 22%; max-width: 150px; animation-duration: 4.8s; animation-delay: 1.2s; }
-        .img-r2 { right: 16%; top: -35px; width: 15%; max-width: 100px; animation-duration: 5.4s; animation-delay: 0.8s; }
+        /* Şəkillər böyüdüldü (width və max-width artırıldı) */
+        .img-l1 { left: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.5s; }
+        .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; animation-delay: 0.5s; }
+        .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; animation-delay: 1.2s; }
+        .img-r2 { right: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.4s; animation-delay: 0.8s; }
 
+        /* Yellənmə effekti üçün Z oxu əlavə edildi ki, 3D mühərrik işə düşsün */
         @keyframes swing {
-            0% { transform: rotate(-8deg); }
-            100% { transform: rotate(8deg); }
+            0% { transform: rotateZ(-8deg) translateZ(0); }
+            100% { transform: rotateZ(8deg) translateZ(0); }
         }
 
         /* --- DALĞA VƏ MƏTN HİSSƏSİ --- */
@@ -139,7 +148,7 @@
             bottom: 0; left: 0;
             width: 100%; height: 35%;
             background-color: #4a148c;
-            z-index: 15; /* Səma və arxa fondan yuxarıda */
+            z-index: 15; 
         }
 
         .wave {
@@ -170,13 +179,13 @@
         @media (max-width: 768px) {
             .moon { font-size: 50px; } 
             
-            /* Sabit arxa fonu mobildə balacalaşdırırıq */
             .static-bg-layer { height: 120px; top: -5px; }
 
-            .img-l1 { left: -2%; top: -15px; width: 30%; max-width: 110px; }
-            .img-l2 { left: 18%; top: -25px; width: 20%; max-width: 75px; }
-            .img-r1 { right: -2%; top: -15px; width: 30%; max-width: 110px; }
-            .img-r2 { right: 18%; top: -25px; width: 20%; max-width: 75px; }
+            /* Mobildə də şəkillər xeyli böyüdüldü */
+            .img-l1 { left: -2%; top: -15px; width: 38%; max-width: 140px; }
+            .img-l2 { left: 18%; top: -25px; width: 28%; max-width: 100px; }
+            .img-r1 { right: -2%; top: -15px; width: 38%; max-width: 140px; }
+            .img-r2 { right: 18%; top: -25px; width: 28%; max-width: 100px; }
 
             .bottom-section { height: 45%; } 
             .wave { top: -29px; height: 30px; } 
