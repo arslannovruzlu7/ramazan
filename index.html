@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sehrli Ramazan Davulu</title>
+    <title>Ramazan Sürprizi</title>
     <style>
         body, html {
             margin: 0; padding: 0;
@@ -18,13 +18,9 @@
         .sky-moving { position: absolute; width: 200vw; height: 200vh; top: -100vh; left: 0; animation: moveDiagonal 45s linear infinite; }
         @keyframes moveDiagonal { 0% { transform: translate(0, 0); } 100% { transform: translate(-100vw, 100vh); } }
         
-        /* AY - İndi KƏSKİN və AYDINDIR */
         .moon { 
             position: absolute; font-size: 80px; color: #fff; 
-            /* Sehrli kölgə əlavə edirik */
             text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7; 
-            /* Blur effektini tamamilə ləğv etdik */
-            filter: none; 
             z-index: 2; 
         }
         .moon-1 { top: 120vh; left: 60vw; }
@@ -44,80 +40,45 @@
             background-size: auto 100%; z-index: 5; pointer-events: none;
         }
         .hanging-zone { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; pointer-events: none; }
-        .hanging-img { position: absolute; transform-origin: top center; animation: swing ease-in-out infinite alternate; height: auto; will-change: transform; }
-        .img-l1 { left: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.5s; }
-        .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; }
-        .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; }
-        .img-r2 { right: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.4s; }
-        @keyframes swing { 0% { transform: rotateZ(-8deg); } 100% { transform: rotateZ(8deg); } }
+        .hanging-img { 
+            position: absolute; transform-origin: top center; 
+            animation: swing ease-in-out infinite alternate; height: auto; 
+            will-change: transform; backface-visibility: hidden; transform: translateZ(0);
+        }
 
-        /* --- DAVUL SAHƏSİ --- */
+        /* Ölçüləri böyük saxladım */
+        .img-l1 { left: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.5s; }
+        .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; animation-delay: 0.5s; }
+        .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; animation-delay: 1.2s; }
+        .img-r2 { right: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.4s; animation-delay: 0.8s; }
+
+        @keyframes swing { 0% { transform: rotateZ(-8deg) translateZ(0); } 100% { transform: rotateZ(8deg) translateZ(0); } }
+
+        /* --- AŞAĞI HİSSƏ --- */
         .bottom-section {
-            position: absolute; bottom: 0; left: 0; width: 100%; height: 42%;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 35%;
             background-color: #4a148c; z-index: 15;
         }
         .wave { position: absolute; top: -49px; left: 0; width: 100%; height: 50px; }
         .wave svg { display: block; width: 100%; height: calc(100% + 4px); transform: translateY(2px); }
 
-        .drum-container {
-            display: flex; flex-direction: column; align-items: center;
-            justify-content: center; height: 100%; position: relative;
+        .content-area {
+            display: flex; align-items: center; justify-content: center; height: 100%;
         }
-
-        /* --- YENİ ROMANTİK YAZI EFFEKTİ (Sparkle Fade) --- */
-        .magic-text-box {
-            position: relative; margin-bottom: 25px; height: 50px;
-            display: flex; align-items: center; justify-content: center;
-            width: 90%;
-        }
-
-        #magic-text {
-            color: #ffd700; font-size: 24px; font-weight: bold;
-            text-align: center; 
-            /* Sehrli parıltı */
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
-            /* Yumşaq keçid animasiyası */
-            transition: opacity 1s ease, transform 1s ease, filter 1s ease;
-            opacity: 1;
-            transform: scale(1);
-            filter: blur(0px);
-        }
-
-        /* Yazının itmə klassı */
-        .text-fade-out {
-            opacity: 0;
-            transform: scale(0.8);
-            filter: blur(10px);
-        }
-
-        /* Davul Şəkli Dizaynı */
-        .drum-wrapper {
-            position: relative; width: 180px; height: 180px;
-            cursor: pointer; transition: transform 0.1s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .drum-wrapper:active { transform: scale(0.92); }
-        .drum-img { width: 100%; height: 100%; object-fit: contain; }
-
-        /* Dalğalanma (Ripple) */
-        .ripple {
-            position: absolute; border: 3px solid #ffd700;
-            border-radius: 50%; pointer-events: none;
-            left: 50%; top: 50%; transform: translate(-50%, -50%);
-            animation: ripple-out 0.7s ease-out;
-        }
-        @keyframes ripple-out { 0% { width: 0; height: 0; opacity: 1; } 100% { width: 350px; height: 350px; opacity: 0; } }
 
         @media (max-width: 768px) {
-            .drum-wrapper { width: 140px; height: 140px; }
-            #magic-text { font-size: 19px; }
-            .bottom-section { height: 48%; }
+            .moon { font-size: 55px; } 
+            .static-bg-layer { height: 160px; top: -10px; }
+            .img-l1 { left: -5%; top: -15px; width: 45%; max-width: 180px; }
+            .img-l2 { left: 15%; top: -25px; width: 35%; max-width: 130px; }
+            .img-r1 { right: -5%; top: -15px; width: 45%; max-width: 180px; }
+            .img-r2 { right: 15%; top: -25px; width: 35%; max-width: 130px; }
+            .bottom-section { height: 42%; } 
+            .wave { top: -29px; height: 30px; } 
         }
     </style>
 </head>
 <body>
-
-    <audio id="drum-sound" src="https://www.myinstants.com/media/sounds/bass-drum.mp3" preload="auto"></audio>
 
     <div class="sky-wrapper">
         <div class="sky-moving" id="sky">
@@ -129,31 +90,25 @@
     <div class="static-bg-layer"></div>
 
     <div class="hanging-zone">
-        <img src="sekil1.png" class="hanging-img img-l1">
-        <img src="sekil2.png" class="hanging-img img-l2">
-        <img src="sekil2.png" class="hanging-img img-r1">
-        <img src="sekil1.png" class="hanging-img img-r2">
+        <img src="sekil1.png" alt="Sol 1" class="hanging-img img-l1">
+        <img src="sekil2.png" alt="Sol 2" class="hanging-img img-l2">
+        <img src="sekil2.png" alt="Sağ 1" class="hanging-img img-r1">
+        <img src="sekil1.png" alt="Sağ 2" class="hanging-img img-r2">
     </div>
 
     <div class="bottom-section">
         <div class="wave">
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.72,187.4,99.82,233.19,83.74,277.6,71.62,321.39,56.44Z" fill="#4a148c"></path></svg>
         </div>
-        
-        <div class="drum-container">
-            <div class="magic-text-box">
-                <div id="magic-text">Məni döyəclə, gub-gub! 🥁</div>
+        <div class="content-area">
             </div>
-            
-            <div class="drum-wrapper" id="drum">
-                <img src="davul.png" class="drum-img" alt="Ramazan Davulu">
-            </div>
-        </div>
     </div>
 
     <script>
         const skyMoving = document.getElementById('sky');
-        for (let i = 0; i < 180; i++) {
+        const starCount = 180; 
+
+        for (let i = 0; i < starCount; i++) {
             let star = document.createElement('div');
             star.className = 'star';
             star.style.width = star.style.height = (Math.random() * 3 + 1) + 'px';
@@ -162,65 +117,7 @@
             star.style.animationDelay = Math.random() * 2 + 's';
             skyMoving.appendChild(star);
         }
-
-        const drum = document.getElementById('drum');
-        const text = document.getElementById('magic-text');
-        const sound = document.getElementById('drum-sound');
-
-        const messages = [
-            "Gecən xeyrə qalsın, mələyim! ",
-            "Bu il bütün duaların çin olsun. ",
-            "Səninlə hər Ramazan bir nağıldır. ",
-            "Süfrən həmişə bərəkətli olsun.",
-            "Səni dünyalar qədər sevirəm! ",
-            "Qəlbinin nuru üzünə vursun. ",
-            "Sən mənim ən gözəl hədiyyəmsən. ",
-            "Dualarımda həmişə sən varsan. ",
-            "Həyatın bu ulduzlar kimi parlasın. ",
-            "Ramazanın hüzuru qəlbinə dolsun.",
-            "Sənin gülüşün mənim iftarımdır. ",
-            "Hər sahurda səni düşünürəm. ",
-            "Mehriban və xoşbəxt qal həmişə.",
-            "Səninlə keçən hər an çox dəyərlidir.",
-            "Bayramda görüşmək ümidi ilə! "
-        ];
-
-        let msgIdx = 0;
-        let isTransitioning = false; // Ard-arda klikləməni idarə etmək üçün
-
-        drum.addEventListener('click', () => {
-            // Əgər keçid gedirsə, klikləməni rədd et
-            if (isTransitioning) return;
-            isTransitioning = true;
-
-            // Səsi çal
-            sound.currentTime = 0;
-            sound.play();
-
-            // Dalğalanma
-            const rip = document.createElement('div');
-            rip.className = 'ripple';
-            drum.appendChild(rip);
-            setTimeout(() => rip.remove(), 700);
-
-            // --- YENİ ROMANTİK KEÇİD ---
-            // 1. Köhnə yazını zərifcə yox edirik
-            text.classList.add('text-fade-out');
-
-            // 2. Keçid vaxtı (1s) bitdikdən sonra yazını dəyişib geri gətiririk
-            setTimeout(() => {
-                msgIdx = (msgIdx + 1) % messages.length;
-                text.innerText = messages[msgIdx];
-                // Yeni yazını zərifcə üzə çıxarırıq
-                text.classList.remove('text-fade-out');
-                
-                // Keçid bitdi
-                setTimeout(() => {
-                    isTransitioning = false;
-                }, 1000);
-
-            }, 1000); // 1 saniyəlik zərif fade-out
-        });
     </script>
+
 </body>
 </html>
