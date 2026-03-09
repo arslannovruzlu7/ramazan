@@ -27,7 +27,6 @@
             position: absolute;
             width: 200vw; height: 200vh;
             top: -100vh; left: 0;
-            /* Sol aşağıya (diaqonal) hərəkət */
             animation: moveDiagonal 30s linear infinite;
         }
 
@@ -52,7 +51,6 @@
             animation: twinkle 2s ease-in-out infinite alternate;
         }
 
-        /* Ulduzların kəskin (adam ağıllı) parlaması */
         @keyframes twinkle {
             0% { 
                 opacity: 0.5; transform: scale(0.9); 
@@ -64,28 +62,29 @@
             }
         }
 
-        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA --- */
+        /* --- ŞƏKİLLƏRİN ASILDIĞI ZONA (YENİLƏNİB) --- */
         .hanging-zone {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             display: flex;
-            justify-content: space-around; /* Şəkilləri sağa və sola aralı yayır */
+            justify-content: space-between; /* Şəkilləri tam olaraq iki kənara atır */
+            padding: 0 5%; /* Kənarlardan çox az (5%) boşluq buraxır ki, ekrana yapışmasın */
+            box-sizing: border-box; /* Padding-in ekranı böyütməsinin qarşısını alır */
             align-items: flex-start;
             z-index: 10;
-            pointer-events: none; /* Şəkillər klikləməyə mane olmasın */
+            pointer-events: none;
         }
 
         .hanging-img {
             transform-origin: top center;
             animation: swing ease-in-out infinite alternate;
-            width: 45%; /* Ekranın genişliyinə görə avtomatik tənzimlənir */
-            max-width: 400px; /* Çox böyüməsinin qarşısını alır */
+            width: 25%; /* Ölçünü xeyli kiçiltdik */
+            max-width: 180px; /* Maksimum böyüklük həddini azaltdıq */
             height: auto;
         }
 
-        /* Hər iki şəklə fərqli yellənmə sürəti veririk ki, təbii görünsün */
         .img-1 { animation-duration: 4.5s; }
         .img-2 { animation-duration: 5.2s; animation-delay: 1s; }
 
@@ -127,12 +126,19 @@
             box-sizing: border-box;
         }
 
-        /* --- MOBİL ÜÇÜN DÜZƏLİŞLƏR --- */
+        /* --- MOBİL ÜÇÜN DÜZƏLİŞLƏR (YENİLƏNİB) --- */
         @media (max-width: 768px) {
             .moon { font-size: 50px; } 
             
-            /* Mobildə şəkillər çox böyük olmasın deyə kiçildiririk */
-            .hanging-img { width: 48%; }
+            /* Mobildə də şəkilləri balacalaşdırıb kənarlara tam sığışdırdıq */
+            .hanging-img { 
+                width: 32%; 
+                max-width: 120px; 
+            }
+            
+            .hanging-zone {
+                padding: 0 2%; /* Mobildə kənar boşluqları bir az da azaltdıq */
+            }
 
             .bottom-section { height: 45%; } 
             .wave { top: -29px; height: 30px; } 
