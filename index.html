@@ -35,17 +35,23 @@
             100% { transform: translate(-100vw, 100vh); }
         }
 
+        /* AYIN YENİ DİZAYNI (Daha yumşaq, parıltılı və yüngül bulanıq) */
         .moon {
             position: absolute;
             font-size: 80px;
             color: #fff;
-            text-shadow: 0 0 25px rgba(255, 255, 210, 0.9);
+            /* Qat-qat yumşaq kölgələr */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 1), 
+                         0 0 35px rgba(255, 255, 210, 0.9),
+                         0 0 60px rgba(255, 255, 210, 0.5);
+            /* Ulduzlarla eyni atmosferi yaratmaq üçün yüngül blur */
+            filter: blur(1px); 
             z-index: 2; 
         }
         .moon-1 { top: 120vh; left: 60vw; }
         .moon-2 { top: 20vh; left: 160vw; } 
 
-        /* Ulduzların YENİ, kənarı sarı (qara kölgəsiz) parlaması */
+        /* Ulduzlar */
         .star {
             position: absolute;
             border-radius: 50%;
@@ -60,6 +66,8 @@
             content: '';
             position: absolute;
             background: linear-gradient(180deg, rgba(255,215,0,0) 0%, rgba(255,255,255,1) 50%, rgba(255,215,0,0) 100%);
+            /* Ulduzların bulanıqlığını cüzi azaltdıq (1px -> 0.6px) */
+            filter: blur(0.6px) contrast(200%);
             pointer-events: none;
         }
 
@@ -120,23 +128,19 @@
             animation: swing ease-in-out infinite alternate;
             height: auto;
             
-            /* QIRILMALARI LƏĞV EDƏN GPU SÜRƏTLƏNDİRMƏSİ (YAĞ KİMİ) */
             will-change: transform;
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
             transform: translateZ(0);
             -webkit-transform: translateZ(0);
-            /* Şəkillərin kənarlarını yumşaldır */
             image-rendering: -webkit-optimize-contrast; 
         }
 
-        /* Şəkillər böyüdüldü (width və max-width artırıldı) */
         .img-l1 { left: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.5s; }
         .img-l2 { left: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.1s; animation-delay: 0.5s; }
         .img-r1 { right: 2%; top: -25px; width: 28%; max-width: 200px; animation-duration: 4.8s; animation-delay: 1.2s; }
         .img-r2 { right: 16%; top: -35px; width: 20%; max-width: 140px; animation-duration: 5.4s; animation-delay: 0.8s; }
 
-        /* Yellənmə effekti üçün Z oxu əlavə edildi ki, 3D mühərrik işə düşsün */
         @keyframes swing {
             0% { transform: rotateZ(-8deg) translateZ(0); }
             100% { transform: rotateZ(8deg) translateZ(0); }
@@ -181,7 +185,6 @@
             
             .static-bg-layer { height: 120px; top: -5px; }
 
-            /* Mobildə də şəkillər xeyli böyüdüldü */
             .img-l1 { left: -2%; top: -15px; width: 38%; max-width: 140px; }
             .img-l2 { left: 18%; top: -25px; width: 28%; max-width: 100px; }
             .img-r1 { right: -2%; top: -15px; width: 38%; max-width: 140px; }
