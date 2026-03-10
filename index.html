@@ -20,6 +20,29 @@
         .sky-moving { position: absolute; width: 200vw; height: 200vh; top: -100vh; left: 0; animation: moveDiagonal 45s linear infinite; }
         @keyframes moveDiagonal { 0% { transform: translate(0, 0); } 100% { transform: translate(-100vw, 100vh); } }
         
+        /* --- SÜRÜŞƏN VƏ TƏKRARLANAN AY --- */
+        .moon-container {
+            position: absolute;
+            top: -100px; /* Ekranın yuxarı sağından kənarda başlayır */
+            right: -100px;
+            z-index: 2;
+            animation: moveMoonDiagonal 35s linear infinite; /* 35 saniyəyə bir tur atır */
+        }
+        @keyframes moveMoonDiagonal {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-120vw, 120vh); } /* Sol aşağıya doğru sürüşür */
+        }
+
+        .moon { 
+            font-size: 70px; color: #fff; 
+            text-shadow: 0 0 20px #ffffff, 0 0 40px #fffde7; 
+            animation: floatMoon 4s ease-in-out infinite alternate;
+        }
+        @keyframes floatMoon {
+            0% { transform: translateY(0) rotate(-5deg); }
+            100% { transform: translateY(15px) rotate(5deg); }
+        }
+
         .star {
             position: absolute; border-radius: 50%; pointer-events: none;
             background-color: #ffffff; filter: drop-shadow(0 0 5px #ffd700);
@@ -137,22 +160,21 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        /* --- SƏNİN QRAFİKANIN OLDUĞU HİSSƏ --- */
+        /* --- QRAFİKA --- */
         .graphic-silhouette {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 85%; /* Şəklin böyüklüyü */
+            width: 85%; 
             height: auto;
-            opacity: 0.15; /* Yazının arxasında çox şəffaf olması üçün */
+            opacity: 0.15; 
             pointer-events: none;
-            z-index: 1; /* Yazının arxasına keçir */
+            z-index: 1; 
         }
 
         .graphic-silhouette img {
             width: 100%;
             height: auto;
-            /* Şəklin rəngini qızılı/ağ tonlara çevirmək üçün CSS filtri */
             filter: invert(100%) sepia(80%) saturate(400%) hue-rotate(340deg) brightness(90%);
         }
 
@@ -174,18 +196,45 @@
             100% { transform: translateY(1000px) rotateZ(80deg) rotateX(150deg); opacity: 0; }
         }
 
+        /* --- FİNAL YAZISI VƏ ATƏŞFƏŞANLIQ CSS --- */
+        #final-wish {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-family: 'Dancing Script', cursive;
+            font-size: 50px;
+            text-align: center;
+            text-shadow: 0 0 20px #ff0000, 0 0 30px #d4af37;
+            opacity: 0;
+            transition: opacity 2s ease;
+            z-index: 100;
+            pointer-events: none;
+            width: 100%;
+        }
+
+        .firework {
+            position: absolute;
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 99;
+        }
+
         @media (max-width: 768px) {
+            .moon { font-size: 50px; }
             .calendar-box { width: 210px; height: 290px; }
             .leaf-message { font-size: 19px; }
+            #final-wish { font-size: 35px; } 
         }
     </style>
 </head>
 <body>
 
     <div class="sky-wrapper">
-        <div class="sky-moving" id="sky">
-            <div class="moon moon-1">🌙</div>
-            <div class="moon moon-2">🌙</div>
+        <div class="sky-moving" id="sky"></div>
+        <div class="moon-container">
+            <div class="moon">🌙</div>
         </div>
     </div>
 
@@ -201,6 +250,8 @@
             <div class="calendar-box" id="calendar"></div>
         </div>
     </div>
+
+    <div id="final-wish">Ramazan Bayramın Mübarək! <br> ❤️</div>
 
     <script>
         // Səma ulduzları
@@ -268,6 +319,49 @@
             calendar.appendChild(createLeaf(i));
         }
 
+        // Atəşfəşanlıq Funksiyaları
+        function startFireworks() {
+            const colors = ['#ff0000', '#ffd700', '#ffffff', '#ff69b4', '#00ff00', '#00ffff'];
+            
+            setInterval(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * (window.innerHeight * 0.6); // Ekranın yuxarı hissəsində
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                createFireworkExplosion(x, y, color);
+            }, 500); // Hər yarım saniyədən bir
+        }
+
+        function createFireworkExplosion(x, y, color) {
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'firework';
+                particle.style.backgroundColor = color;
+                particle.style.left = x + 'px';
+                particle.style.top = y + 'px';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * 6 + 2;
+                const vx = Math.cos(angle) * velocity;
+                const vy = Math.sin(angle) * velocity;
+                
+                document.body.appendChild(particle);
+                
+                let op = 1;
+                const move = setInterval(() => {
+                    particle.style.left = (parseFloat(particle.style.left) + vx) + 'px';
+                    particle.style.top = (parseFloat(particle.style.top) + vy) + 'px';
+                    op -= 0.02;
+                    particle.style.opacity = op;
+                    
+                    if (op <= 0) {
+                        clearInterval(move);
+                        particle.remove();
+                    }
+                }, 20);
+            }
+        }
+
         // Klik hadisəsi
         calendar.addEventListener('click', () => {
             if (instructionText.style.opacity !== "0") {
@@ -283,15 +377,19 @@
 
             if (removedDays === 30) {
                 setTimeout(() => {
+                    // Təqvimi tamamilə yox et
                     calendar.style.display = 'none';
-                }, 2200);
+                    if (instructionText) instructionText.style.display = 'none';
+
+                    // Təbrik yazısını göstər
+                    const wish = document.getElementById('final-wish');
+                    wish.style.opacity = "1";
+
+                    // Atəşfəşanlığı başlat
+                    startFireworks();
+                }, 2200); 
             }
         });
     </script>
 </body>
 </html>
-
-
-
-
-
