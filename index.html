@@ -207,10 +207,13 @@
             text-align: center;
             text-shadow: 0 0 20px #ff0000, 0 0 30px #d4af37;
             opacity: 0;
-            transition: opacity 2s ease;
+            transition: opacity 1.5s ease;
             z-index: 100;
             pointer-events: none;
             width: 100%;
+            padding: 0 20px; /* Telefonda kənarlara dəyməməsi üçün */
+            box-sizing: border-box; /* Padding-in eni pozmamasını təmin edir */
+            word-wrap: break-word;
         }
 
         .firework {
@@ -225,7 +228,10 @@
             .moon { font-size: 50px; }
             .calendar-box { width: 210px; height: 290px; }
             .leaf-message { font-size: 19px; }
-            #final-wish { font-size: 35px; } 
+            #final-wish { 
+                font-size: 32px; /* Mobil üçün yazını daha da kiçiltdim */
+                line-height: 1.4;
+            } 
         }
     </style>
 </head>
@@ -376,22 +382,22 @@
             removedDays++;
 
             if (removedDays === 30) {
+                // Yarpaq ekrandan çıxmağa başlayanda (1.2 saniyə sonra) arxa planı gizlət və atəşfəşanlığı başlat
                 setTimeout(() => {
-                    // Təqvimi tamamilə yox et
                     calendar.style.display = 'none';
                     if (instructionText) instructionText.style.display = 'none';
-
-                    // Təbrik yazısını göstər
-                    const wish = document.getElementById('final-wish');
-                    wish.style.opacity = "1";
-
+                    
                     // Atəşfəşanlığı başlat
                     startFireworks();
-                }, 2200); 
+                }, 1200); 
+
+                // Atəşfəşanlıq başladıqdan az sonra yazını göstər
+                setTimeout(() => {
+                    const wish = document.getElementById('final-wish');
+                    wish.style.opacity = "1";
+                }, 2000); 
             }
         });
     </script>
 </body>
 </html>
-
-
