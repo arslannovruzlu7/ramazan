@@ -224,6 +224,18 @@
             z-index: 99;
         }
 
+        /* YENİ ƏLAVƏ EDİLƏN HİSSƏ */
+        #fireworks-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* Ekrandan çıxan fişəngləri gizlədir */
+            pointer-events: none; /* Toxunmalara (klik) mane olmur */
+            z-index: 98;
+        }
+
         @media (max-width: 768px) {
             .moon { font-size: 50px; }
             .calendar-box { width: 210px; height: 290px; }
@@ -236,6 +248,8 @@
     </style>
 </head>
 <body>
+
+    <div id="fireworks-container"></div>
 
     <div class="sky-wrapper">
         <div class="sky-moving" id="sky"></div>
@@ -351,7 +365,8 @@
                 const vx = Math.cos(angle) * velocity;
                 const vy = Math.sin(angle) * velocity;
                 
-                document.body.appendChild(particle);
+                // YENİ ƏLAVƏ EDİLƏN DƏYİŞİKLİK
+                document.getElementById('fireworks-container').appendChild(particle);
                 
                 let op = 1;
                 const move = setInterval(() => {
